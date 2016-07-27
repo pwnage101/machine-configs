@@ -1,0 +1,31 @@
+---
+# list of packages to install for each OS
+os_packages:
+  debian:
+  - vim-gtk # gives +clipboard feature
+  - rsync
+  - i3
+  - suckless-tools
+  - surf
+  - stterm
+  - dunst
+  - firefox-esr
+  - vim
+  - zsh
+  - msmtp
+  - openconnect
+  - network-manager-openconnect
+  - network-manager-openconnect-gnome
+  - x11-xserver-utils # provides xset
+
+guix_packages:
+- glibc-utf8-locales
+- notmuch@0.21
+- offlineimap@6.7.0.1
+- alot@0.3.7
+- notmuch-addrlookup-c@7
+- isync@1.2.1
+- vdirsyncer@0.11.2
+
+#tools_src_dir: tools
+

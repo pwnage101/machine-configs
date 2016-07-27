@@ -1,0 +1,36 @@
+# prompt stuff
+autoload -Uz promptinit
+promptinit
+prompt adam1
+
+# Use emacs keybindings even if our EDITOR is set to vi
+bindkey -e
+
+# history stuff
+setopt histignorealldups sharehistory
+HISTSIZE=2000
+SAVEHIST=2000
+HISTFILE=~/.zsh_history
+
+# completion stuff
+autoload -Uz compinit
+compinit
+zstyle ':completion:*' completer _expand _complete _correct _approximate
+#eval "$(dircolors -b)"
+zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
+
+# aliases
+alias ls="ls --color"
+export LESS="-iR"
+
+# editor
+export EDITOR=vim
+
+# guix stuff
+source "$HOME/.guix-profile/etc/profile"
+export GUIX_LOCPATH=$HOME/.guix-profile/lib/locale
+#export PYTHONPATH="/home/sankey/.guix-profile/lib/python3.4/site-packages"
+
+# path
+export PATH=~/bin:$PATH
+

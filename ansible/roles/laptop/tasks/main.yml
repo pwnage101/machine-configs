@@ -1,0 +1,10 @@
+---
+- name: install laptop related packages
+  sudo: True
+  apt: name={{ item }}
+  with_items:
+  - laptop-mode-tools
+  - xcalib
+  - network-manager
+  - network-manager-gnome
+  - pm-utils

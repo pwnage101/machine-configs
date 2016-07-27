@@ -1,0 +1,10 @@
+# laptop stuff
+xfce4-power-manager
+nm-applet &
+
+# general stuff
+xset -b
+setxkbmap -option ctrl:nocaps
+eval "$(gpg-agent --daemon)"
+eval "$(ssh-agent -k)"
+exec /usr/bin/i3

@@ -1,0 +1,6 @@
+---
+- name: fetch rawtherapee code
+  git:
+    repo: https://github.com/Beep6581/RawTherapee.git
+    dest: /tmp/rt
+    version: 023e7d36956a0fefa7a0d99fc9e1316468eff5f7

@@ -1,0 +1,21 @@
+---
+#- name: update apt cache
+#  sudo: True
+#  apt: update_cache=yes
+- name: install development related packages
+  sudo: True
+  apt: name={{ item }}
+  with_items:
+  - git
+  - build-essential
+  - strace
+  - virtualenvwrapper
+  - python-virtualenv
+  - pyflakes
+  - pylint
+  - lxc
+  - libvirt-bin
+  - libvirt-clients
+  - ansible
+  - rhc
+  - jq

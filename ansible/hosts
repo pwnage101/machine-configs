@@ -1,0 +1,16 @@
+node2.sankey.info ansible_ssh_user=sankeytm
+node3.sankey.info ansible_ssh_user=sankey
+
+[servers-web]
+node[2:3].sankey.info
+
+[servers-backup]
+node[2:3].sankey.info
+
+[laptops-personal]
+localhost ansible_ssh_port=9222
+
+[desktops-personal]
+
+[laptops-work]
+192.168.1.11 ansible_ssh_user=tsankey

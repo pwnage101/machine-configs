@@ -1,0 +1,144 @@
+---
+############
+# packages #
+############
+#- name: update apt cache
+#  sudo: True
+#  apt: update_cache=yes
+- name: install common packages
+  sudo: True
+  apt: name={{ item }}
+  with_items: debian_packages
+
+############
+# dotfiles #
+############
+- name: configure xinitrc
+  copy: src=xinitrc dest=~/.xinitrc
+- name: configure i3
+  copy: src=i3/config dest=~/.i3/config
+- name: configure i3status
+  copy: src=i3status.conf dest=~/.i3status.conf
+- name: configure vim
+  copy: src=vimrc dest=~/.vimrc
+- name: configure vim plugins
+  synchronize: src=vim/ dest=~/.vim/
+- name: configure zsh
+  copy: src=zshrc dest=~/.zshrc
+- name: ensure default shell is zsh
+  sudo: True
+  user:
+    name: "{{ ansible_user_id }}"
+    shell: /usr/bin/zsh
+
+########
+# Guix #
+########
+
+- name: fetch guix
+  sudo: True
+  get_url:
+    url: http://alpha.gnu.org/gnu/guix/guix-binary-0.10.0.x86_64-linux.tar.xz
+    dest: /tmp
+- name: fetch guix sig
+  sudo: True
+  get_url:
+    url: http://alpha.gnu.org/gnu/guix/guix-binary-0.10.0.x86_64-linux.tar.xz.sig
+    dest: /tmp
+- name: import guix signing key
+  sudo: True
+  command: gpg --keyserver keys.gnupg.net --recv-keys 3D9AEBB5
+- name: verify guix
+  sudo: True
+  command: gpg --verify guix-binary-0.10.0.x86_64-linux.tar.xz.sig
+  args:
+    chdir: /tmp
+- name: untar guix
+  sudo: True
+  unarchive:
+    src: /tmp/guix-binary-0.10.0.x86_64-linux.tar.xz
+    dest: /tmp
+    creates: /tmp/gnu
+    copy: no
+- name: create /var/guix
+  sudo: True
+  command: mv var/guix /var/
+  args:
+    chdir: /tmp
+    creates: /var/guix
+- name: create /gnu
+  sudo: True
+  command: mv gnu /
+  args:
+    chdir: /tmp
+    creates: /gnu
+- name: create guix profile for root
+  sudo: True
+  file:
+    src: /var/guix/profiles/per-user/root/guix-profile
+    dest: /root/.guix-profile
+    state: link
+- name: create guixbuild group
+  sudo: True
+  group:
+    name: guixbuild
+    system: yes
+- name: create guixbuild users
+  sudo: True
+  user:
+    name: "guixbuilder{{ item }}"
+    groups: guixbuild
+    home: /var/empty
+    shell: /usr/sbin/nologin
+    comment: "Guix build user {{ item }}"
+    system: yes
+    state: present
+  with_sequence: count=10
+- name: setup guix-daemon systemd unit file
+  sudo: True
+  command: cp /root/.guix-profile/lib/systemd/system/guix-daemon.service /etc/systemd/system/
+  args:
+    creates: /etc/systemd/system/guix-daemon.service
+- name: make the guix utility available everywhere
+  sudo: True
+  file:
+    src: /var/guix/profiles/per-user/root/guix-profile/bin/guix
+    dest: /usr/local/bin/guix
+    state: link
+- name: start guix-daemon
+  sudo: True
+  service:
+    name: guix-daemon
+    state: started
+- name: enable guix-daemon
+  sudo: True
+  service:
+    name: guix-daemon
+    enabled: yes
+- name: enable the gnu substitutes server
+  sudo: True
+  shell: guix archive --authorize < /root/.guix-profile/share/guix/hydra.gnu.org.pub
+
+
+
+##################
+# suckless tools #
+##################
+#- name: setup suckless tools dir
+#  file: path={{ tools_src_dir }} state=directory
+#- include: install_suckless_tool.yml
+#  vars:
+#    name: dmenu
+#    version: b3d9451c2ddfad7c1b10e9a868afed4d92b37e41
+#- include: install_suckless_tool.yml
+#  vars:
+#    name: slock
+#    version: 65b8d5278882310eed758e6fbfd6ab9676db883c
+#- include: install_suckless_tool.yml
+#  vars:
+#    name: st
+#    version: ff241199edc7631d6599c22414ef6823059a1072
+#- include: install_suckless_tool.yml
+#  vars:
+#    name: surf
+#    version: f5e8baad06eafef22df12ab2649139260127d4e4

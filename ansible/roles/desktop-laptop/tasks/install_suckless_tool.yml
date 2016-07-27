@@ -1,0 +1,39 @@
+---
+# prerequisites: patches must exist locally under files/{{ name }}/*.patch of
+# this role
+- name: "fetch {{ name }} version {{ version }}"
+  git:
+    repo: "http://git.suckless.org/{{ name }}"
+    version: "{{ version }}"
+    dest: "{{ tools_src_dir }}/{{ name }}"
+- name: make sure patches directory exists
+  file:
+    path: "~/{{ tools_src_dir }}/{{ name }}/my_patches"
+    state: directory
+- name: "copy {{ name }} patches to host"
+  synchronize:
+    src: "{{ name }}_patches/"
+    dest: "{{ tools_src_dir }}/{{ name }}/my_patches/"
+    delete: yes
+- name: find patches
+  shell: ls -1 my_patches
+  args:
+    chdir: "{{ tools_src_dir }}/{{ name }}"
+  register: reg_find_patches
+  changed_when: FALSE
+- name: "patch {{ name }}"
+  command: "patch -p1 -f -i my_patches/{{ item }}"
+  with_items: reg_find_patches.stdout_lines
+  args:
+    chdir: "{{ tools_src_dir }}/{{ name }}"
+  when: "{{ reg_find_patches.stdout_lines | length }} > 0"
+  register: reg_patch
+- name: "compile {{ name }}"
+  command: make
+  args:
+    chdir: "{{ tools_src_dir }}/{{ name }}"
+- name: "install {{ name }}"
+  sudo: True
+  command: make install
+  args:
+    chdir: "{{ tools_src_dir }}/{{ name }}"

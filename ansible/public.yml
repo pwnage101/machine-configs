@@ -1,0 +1,7 @@
+---
+- hosts: servers-web
+  roles: website
+- hosts: photo-servers photo-clients
+  roles: photography
+#- hosts: servers-backup
+#  roles: backup-destination

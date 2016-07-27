@@ -1,0 +1,10 @@
+---
+- hosts:
+  - laptops-personal
+  - laptops-work
+  roles:
+  - laptop
+- hosts:
+  - desktops-personal
+  roles:
+  - desktop

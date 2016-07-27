@@ -1,0 +1,28 @@
+---
+############
+# packages #
+############
+#- name: update apt cache
+#  sudo: True
+#  apt: update_cache=yes
+- name: install common guix packages
+  sudo: True
+  shell: guix package -i vdirsyncer
+
+############
+# dotfiles #
+############
+- name: configure vdirsyncer
+  copy: src=i3/config dest=~/.i3/config
+- name: configure i3status
+  copy: src=i3status.conf dest=~/.i3status.conf
+- name: configure vim
+  copy: src=vimrc dest=~/.vimrc
+- name: configure vim plugins
+  synchronize: src=vim/ dest=~/.vim/
+
+########
+# cron #
+########
+- name: setup cron job to sync the ics calendar file
+  cron: name="check dirs" job="vdirsyncer sync"
