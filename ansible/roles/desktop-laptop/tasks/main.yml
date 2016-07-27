@@ -10,6 +10,9 @@
   apt: name={{ item }}
   with_items: debian_packages
 
+- name: configure ~/bin
+  synchronize: src=bin/ dest=~/bin/
+
 ############
 # dotfiles #
 ############
