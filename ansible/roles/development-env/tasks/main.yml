@@ -4,7 +4,8 @@
 #  apt: update_cache=yes
 - name: install development related packages
   sudo: True
-  apt: name={{ item }}
+  apt:
+    name: '{{ item }}'
   with_items:
   - git
   - build-essential
@@ -19,3 +20,33 @@
   - ansible
   - rhc
   - jq
+  - libjpeg-dev
+
+# TODO: put condition on this to only install for work laptop
+- name: install newer virtualbox from backports
+  sudo: True
+  apt:
+    name: '{{ item }}'
+    state: latest
+    default_release: jessie-backports
+  with_items:
+  - virtualbox
+  - virtualbox-dkms
+  - virtualbox-qt
+  - virtualbox-guest-dkms
+  - virtualbox-guest-utils
+  - virtualbox-guest-additions-iso
+
+# TODO: put condition on this to only install for work laptop
+# fetch and install vagrant
+- name: fetch vagrant
+  sudo: True
+  get_url:
+    url: 'https://releases.hashicorp.com/vagrant/1.8.5/vagrant_1.8.5_x86_64.deb'
+    dest: /root
+  when: (ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu') and ansible_architecture == "x86_64"
+- name: install vagrant
+  sudo: True
+  apt:
+    deb: /root/vagrant_1.8.5_x86_64.deb
+  when: (ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu') and ansible_architecture == "x86_64"

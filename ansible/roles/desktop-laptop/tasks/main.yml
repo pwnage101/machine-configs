@@ -8,10 +8,10 @@
 - name: install common packages
   sudo: True
   apt: name={{ item }}
-  with_items: debian_packages
+  with_items: os_packages.debian
 
 - name: configure ~/bin
-  synchronize: src=bin/ dest=~/bin/
+  synchronize: src=roles/desktop-laptop/files/bin/ dest=~/bin/
 
 ############
 # dotfiles #
@@ -25,7 +25,7 @@
 - name: configure vim
   copy: src=vimrc dest=~/.vimrc
 - name: configure vim plugins
-  synchronize: src=vim/ dest=~/.vim/
+  synchronize: src=roles/desktop-laptop/files/vim/ dest=~/.vim/
 - name: configure zsh
   copy: src=zshrc dest=~/.zshrc
 - name: ensure default shell is zsh

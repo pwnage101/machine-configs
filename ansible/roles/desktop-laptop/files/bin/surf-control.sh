@@ -59,6 +59,12 @@ case "$p" in
     "y") # youtube
         ret="http://www.youtube.com/results?search_query=$arg&aq=f"
         ;;
+    "jira") # search jira tickets
+        ret="https://openedx.atlassian.net/browse/$arg"
+        ;;
+    "wiki") # search the confluence wiki
+        ret="https://openedx.atlassian.net/wiki/dosearchsite.action?queryString=$arg"
+        ;;
     *)
         ret="$sel"
         ;;

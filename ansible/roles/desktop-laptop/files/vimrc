@@ -88,4 +88,7 @@ set hidden
 set hlsearch
 colorscheme jellybeans
 
+set modeline
+set modelines=5
+
 " vim:set ft=vim et sw=2:
