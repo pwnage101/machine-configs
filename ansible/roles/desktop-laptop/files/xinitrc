@@ -6,5 +6,5 @@ nm-applet &
 xset -b
 setxkbmap -option ctrl:nocaps
 eval "$(gpg-agent --daemon)"
-eval "$(ssh-agent -k)"
+eval "$(ssh-agent)"
 exec /usr/bin/i3
