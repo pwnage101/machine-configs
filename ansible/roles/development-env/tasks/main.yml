@@ -21,6 +21,10 @@
   - rhc
   - jq
   - libjpeg-dev
+  - libffi-dev
+  - libssl-dev
+  - libxml2-dev
+  - libxslt1-dev
 
 # TODO: put condition on this to only install for work laptop
 - name: install newer virtualbox from backports

@@ -42,7 +42,7 @@ case "$p" in
     s_xprop _SURF_GO "$ret"
     ;;
 "_SURF_URI")
-    sel=`tac $bmarks 2> /dev/null | $dmenu -l 10 -p "uri [dgtwy*]:"`
+    sel=`$dmenu -l 10 -p "uri [dgtwy*]:" < $bmarks`
     [ -z "$sel" ] && exit
     opt=$(echo $sel | cut -d ' ' -f 1)
     arg=$(echo $sel | cut -d ' ' -f 2-)

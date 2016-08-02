@@ -1,4 +1,6 @@
 ---
+MONOSPACE_FONT_POINT: 14
+
 # list of packages to install for each OS
 os_packages:
   debian:
@@ -10,13 +12,13 @@ os_packages:
   - stterm
   - dunst
   - firefox-esr
-  - vim
   - zsh
   - msmtp
   - openconnect
   - network-manager-openconnect
-  - network-manager-openconnect-gnome
+  - network-manager-openconnect-gnome # for the desktop applet
   - x11-xserver-utils # provides xset
+  - pulseaudio
 
 guix_packages:
 - glibc-utf8-locales
