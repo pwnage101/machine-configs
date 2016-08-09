@@ -12,6 +12,8 @@
   - strace
   - virtualenvwrapper
   - python-virtualenv
+  - python-dev
+  - python3-dev
   - pyflakes
   - pylint
   - lxc
@@ -25,9 +27,10 @@
   - libssl-dev
   - libxml2-dev
   - libxslt1-dev
+  - nfs-kernel-server
 
-# TODO: put condition on this to only install for work laptop
-- name: install newer virtualbox from backports
+# TODO: put condition on this to only install for edx
+- name: install newer software from backports
   sudo: True
   apt:
     name: '{{ item }}'
@@ -39,18 +42,31 @@
   - virtualbox-qt
   - virtualbox-guest-dkms
   - virtualbox-guest-utils
+
+# TODO: put condition on this to only install for edx
+- name: install newer software from stretch
+  sudo: True
+  apt:
+    name: '{{ item }}'
+    state: latest
+    default_release: stretch
+  with_items:
   - virtualbox-guest-additions-iso
 
-# TODO: put condition on this to only install for work laptop
+# TODO: put condition on this to only install for edx
 # fetch and install vagrant
 - name: fetch vagrant
   sudo: True
   get_url:
-    url: 'https://releases.hashicorp.com/vagrant/1.8.5/vagrant_1.8.5_x86_64.deb'
+    url: 'https://releases.hashicorp.com/vagrant/1.8.1/vagrant_1.8.1_x86_64.deb'
     dest: /root
-  when: (ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu') and ansible_architecture == "x86_64"
+  when: ansible_distribution == 'Debian' and ansible_architecture == "x86_64"
+  tags:
+  - vagrant
 - name: install vagrant
   sudo: True
   apt:
-    deb: /root/vagrant_1.8.5_x86_64.deb
-  when: (ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu') and ansible_architecture == "x86_64"
+    deb: /root/vagrant_1.8.1_x86_64.deb
+  when: ansible_distribution == 'Debian' and ansible_architecture == "x86_64"
+  tags:
+  - vagrant
