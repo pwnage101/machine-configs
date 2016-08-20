@@ -2,7 +2,7 @@
 MONOSPACE_FONT_POINT: 14
 
 # list of packages to install for each OS
-os_packages:
+OS_PACKAGES:
   debian:
   - vim-gtk # gives +clipboard feature
   - rsync
@@ -20,14 +20,15 @@ os_packages:
   - x11-xserver-utils # provides xset
   - pulseaudio
 
-guix_packages:
-- glibc-utf8-locales
-- notmuch@0.21
-- offlineimap@6.7.0.1
-- alot@0.3.7
-- notmuch-addrlookup-c@7
-- isync@1.2.1
-- vdirsyncer@0.11.2
+GUIX_PACKAGES:
+- glibc-locales
+- notmuch
+- offlineimap
+- alot
+- notmuch-addrlookup-c
+- isync
+- vdirsyncer
+- bitlbee
 
 #tools_src_dir: tools
 

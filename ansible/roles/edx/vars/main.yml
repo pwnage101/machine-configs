@@ -1,0 +1,37 @@
+---
+DEBIAN_PACKAGES:
+- ansible
+- build-essential
+- git
+- libffi-dev
+- libjpeg-dev
+- libssl-dev
+- libxml2-dev
+- libxslt1-dev
+- network-manager-openconnect
+- network-manager-openconnect-gnome # for the desktop applet
+- nfs-kernel-server
+- openconnect
+- pyflakes
+- pylint
+- python-dev
+- python-virtualenv
+- python3-dev
+- virtualenvwrapper
+
+DEBIAN_BACKPORTS_PACKAGES:
+- virtualbox
+- virtualbox-dkms
+- virtualbox-qt
+- virtualbox-guest-dkms
+- virtualbox-guest-utils
+
+DEBIAN_STRETCH_PACKAGES:
+- virtualbox-guest-additions-iso
+
+GUIX_PACKAGES:
+- go
+- gccgo
+- docker-compose
+
+VAGRANT_VERSION: "1.8.1"

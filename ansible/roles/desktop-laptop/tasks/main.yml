@@ -8,7 +8,10 @@
 - name: install common packages
   sudo: True
   apt: name={{ item }}
-  with_items: os_packages.debian
+  with_items: OS_PACKAGES.debian
+
+- name: install software from guix
+  command: "guix package -i {{ GUIX_PACKAGES|join('  ') }}"
 
 - name: configure ~/bin
   synchronize: src=roles/desktop-laptop/files/bin/ dest=~/bin/
