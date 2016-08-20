@@ -26,13 +26,14 @@
                                     (url ,(string-append suckess-git-uri-prefix package-name))
                                     (commit ,commit)))
                              (sha256 (base32 ,hash)))
+                           ; optionally include patches
                            (if (eq? patches #f)
                                '()
                                `((patches (quote ,(primitive-eval `(search-patches . ,patches))))))))))
+             ; optionally override inputs
              (if (eq? inputs #f) '() `((inputs (quote ,inputs)))))))
     (primitive-eval
-      `(define-public
-        ,(string->symbol new-package-name)
+      `(define-public ,(string->symbol new-package-name)
         ,new-package))))
 
 (suckless-tool
