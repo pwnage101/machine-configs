@@ -1,0 +1,17 @@
+---
+- hosts: localhost
+  sudo: yes
+  roles:
+  - server
+  - role: tahoe-storage
+    location: /data/tahoe-storage
+#  - role: website-troy
+#    location: /data/www/troy
+#  - role: website-lyn
+#    location: /data/www/lyn
+#  - role: website-sbk
+#    location: /data/www/sbk
+#  - role: website-tmp
+#    location: /data/www/tmp
+#  - role: website-rand
+#    location: /data/www/rand

@@ -1,0 +1,70 @@
+---
+- name: fetch guix
+  get_url:
+    url: "{{ URL_PREFIX }}{{ FILENAME }}" 
+    sha256sum: "{{ SHA256 }}"
+    dest: /root
+- name: fetch guix sig
+  get_url:
+    url: "{{ URL_PREFIX }}{{ FILENAME }}.sig" 
+    dest: /root
+- name: import guix signing key
+  command: "gpg --keyserver keys.gnupg.net --recv-keys {{ SIGNING_KEY_FPRINT }}"
+- name: verify guix
+  command: "gpg --verify {{ FILENAME }}.sig"
+  args:
+    chdir: /root
+- name: untar guix
+  unarchive:
+    src: "/root/{{ FILENAME }}"
+    dest: /tmp
+    creates: /tmp/gnu
+    copy: no
+- name: create /var/guix
+  command: mv var/guix /var/
+  args:
+    chdir: /tmp
+    creates: /var/guix
+- name: create /gnu
+  command: mv gnu /
+  args:
+    chdir: /tmp
+    creates: /gnu
+- name: create guix profile for root
+  file:
+    src: /var/guix/profiles/per-user/root/guix-profile
+    dest: /root/.guix-profile
+    state: link
+- name: create guixbuild group
+  group:
+    name: guixbuild
+    system: yes
+- name: create guixbuild users
+  user:
+    name: "guixbuilder{{ item }}"
+    groups: guixbuild
+    home: /var/empty
+    shell: /usr/sbin/nologin
+    comment: "Guix build user {{ item }}"
+    system: yes
+    state: present
+  with_sequence: count=10
+- name: setup guix-daemon systemd unit file
+  command: cp /root/.guix-profile/lib/systemd/system/guix-daemon.service /etc/systemd/system/
+  args:
+    creates: /etc/systemd/system/guix-daemon.service
+- name: make the guix utility available everywhere
+  file:
+    src: /var/guix/profiles/per-user/root/guix-profile/bin/guix
+    dest: /usr/local/bin/guix
+    state: link
+- name: start guix-daemon
+  service:
+    name: guix-daemon
+    state: started
+- name: enable guix-daemon
+  service:
+    name: guix-daemon
+    enabled: yes
+- name: enable the gnu substitutes server
+  shell: guix archive --authorize < /root/.guix-profile/share/guix/hydra.gnu.org.pub

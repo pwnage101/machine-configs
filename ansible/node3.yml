@@ -1,0 +1,7 @@
+---
+- hosts: localhost
+  sudo: yes
+  roles:
+  - server
+  - role: tahoe
+    location: /data/tahoe-storage
