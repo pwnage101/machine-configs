@@ -2,6 +2,32 @@
 - hosts: localhost
   sudo: yes
   roles:
-  - server
-  - role: tahoe
+  - guix
+  - server-common
+
+  # storage server
+  - role: tahoe-storage
     location: /data/tahoe-storage
+    capacity: 50
+
+  # sbk website
+  - role: tahoe-mnt
+    location: www/sbk
+    mountpoint: /data/www/sbk
+    user: www-data
+    group: www-data
+    mode: 0444
+  - role: www
+    location: /data/www/sbk
+    cgi: true
+    
+  # my homepage
+  - role: tahoe-mnt
+    location: www/troy
+    mountpoint: /data/www/troy
+    user: www-data
+    group: www-data
+    mode: 0444
+  - role: www
+    location: /data/www/troy
+    cgi: true

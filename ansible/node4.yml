@@ -2,16 +2,63 @@
 - hosts: localhost
   sudo: yes
   roles:
-  - server
+  - guix
+  - server-common
+
+  # storage server
   - role: tahoe-storage
     location: /data/tahoe-storage
-#  - role: website-troy
-#    location: /data/www/troy
-#  - role: website-lyn
-#    location: /data/www/lyn
-#  - role: website-sbk
-#    location: /data/www/sbk
-#  - role: website-tmp
-#    location: /data/www/tmp
-#  - role: website-rand
-#    location: /data/www/rand
+    capacity: 20
+
+  # sbk website
+  - role: tahoe-mnt
+    location: www/sbk
+    mountpoint: /data/www/sbk
+    user: www-data
+    group: www-data
+    mode: 0444
+  - role: www
+    location: /data/www/sbk
+    cgi: true
+    
+  # my homepage
+  - role: tahoe-mnt
+    location: www/troy
+    mountpoint: /data/www/troy
+    user: www-data
+    group: www-data
+    mode: 0444
+  - role: www
+    location: /data/www/troy
+    cgi: true
+
+  # Lyn's homepage
+  - role: tahoe-mnt
+    location: www/lyn
+    mountpoint: /data/www/lyn
+    user: www-data
+    group: www-data
+    mode: 0444
+  - role: www
+    location: /data/www/lyn
+    cgi: true
+
+  # tmp
+  - role: tahoe-mnt
+    location: www/tmp
+    mountpoint: /data/www/tmp
+    user: www-data
+    group: www-data
+    mode: 0444
+  - role: www
+    location: /data/www/tmp
+
+  # rand
+  - role: tahoe-mnt
+    location: www/rand
+    mountpoint: /data/www/rand
+    user: www-data
+    group: www-data
+    mode: 0444
+  - role: www
+    location: /data/www/rand

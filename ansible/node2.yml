@@ -2,6 +2,5 @@
 - hosts: localhost
   sudo: yes
   roles:
-  - server
-  - role: tahoe
-    location: /mnt/raid1/tahoe-storage
+  - guix
+  - server-common
