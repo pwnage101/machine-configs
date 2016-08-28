@@ -1,4 +1,5 @@
 ---
-TAHOE_VERSION: "1.11.0"
-TAHOE_SHA256: "1552c149f31b5ba0eed58df7bcebc6b3521d92290d0f274bf3c304c51f595d26"
-TAHOE_URL: "https://tahoe-lafs.org/downloads/tahoe-lafs-{{ TAHOE_VERSION }}.tar.gz"
+PYPI_PACKAGE: "tahoe-lafs>=1.11.0"
+VENV: /opt/tahoe.venv
+
+GUIX_BIN: /var/guix/profiles/per-user/root/guix-profile/bin

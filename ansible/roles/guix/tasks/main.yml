@@ -1,12 +1,12 @@
 ---
 - name: fetch guix
   get_url:
-    url: "{{ URL_PREFIX }}{{ FILENAME }}" 
+    url: "{{ URL_PREFIX }}/{{ FILENAME }}"
     sha256sum: "{{ SHA256 }}"
-    dest: /root
+    dest: "/root/{{ FILENAME }}"
 - name: fetch guix sig
   get_url:
-    url: "{{ URL_PREFIX }}{{ FILENAME }}.sig" 
+    url: "{{ URL_PREFIX }}/{{ FILENAME }}.sig"
     dest: /root
 - name: import guix signing key
   command: "gpg --keyserver keys.gnupg.net --recv-keys {{ SIGNING_KEY_FPRINT }}"
