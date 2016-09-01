@@ -1,5 +1,3 @@
 ---
 PYPI_PACKAGE: "tahoe-lafs>=1.11.0"
 VENV: /opt/tahoe.venv
-
-GUIX_BIN: /var/guix/profiles/per-user/root/guix-profile/bin

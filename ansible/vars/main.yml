@@ -1,0 +1,5 @@
+---
+# Prefix this variable in front of any program name and get the version
+# installed by the root user via guix. E.g. "{{ GUIX_BIN }}/locale" instead of
+# "locale".
+GUIX_BIN: /var/guix/profiles/per-user/root/guix-profile/bin
