@@ -15,7 +15,7 @@
       lockout.
   when: authorized_keys.rc != 0
 
-# among other things, the following task will DISABLE PASSWORD LOGINS
+# among other things, the following task will DISABLE PASSWORD-ONLY LOGINS
 - name: install our sshd_config
   template:
     src: sshd_config
