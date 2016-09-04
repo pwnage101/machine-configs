@@ -24,7 +24,7 @@
 - name: create guixbuild users
   user:
     name: "guixbuilder{{ item }}"
-    groups: guixbuild
+    group: guixbuild
     home: /var/empty
     shell: /usr/sbin/nologin
     comment: "Guix build user {{ item }}"
