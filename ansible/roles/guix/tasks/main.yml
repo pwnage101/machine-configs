@@ -59,7 +59,7 @@
   file:
     path: /tmp/{{ item }}
     state: absent
-  items:
+  with_items:
   - gnu
   - var
   when: gnu_store_stat.stat.exists == false
@@ -89,6 +89,11 @@
     src: /var/guix/profiles/per-user/root/guix-profile
     dest: /root/.guix-profile
     state: link
+- name: make the guix utility available everywhere
+  file:
+    src: /var/guix/profiles/per-user/root/guix-profile/bin/guix
+    dest: /usr/local/bin/guix
+    state: link
 
 # setup or update guix-daemon systemd service
 - name: get hash of current guix-daemon systemd service file
@@ -101,24 +106,26 @@
     path: /root/.guix-profile/lib/systemd/system/guix-daemon.service
     get_md5: true
   register: new_service_file
+  when: current_service_file.stat.exists
 - name: setup/update guix-daemon systemd service file
   command: cp /root/.guix-profile/lib/systemd/system/guix-daemon.service /etc/systemd/system/
-  when: current_service_file.stat.md5 != new_service_file.stat.md5
+  when:
+  - current_service_file.stat.exists
+  - current_service_file.stat.md5 != new_service_file.stat.md5
   register: service_file_updated
-- name: restart guix-daemon if the service file was updated
+- name: invoke systemctl daemon-reload if service file was changed
+  command: systemctl daemon-reload
+  when:
+  - service_file_updated is defined
+  - service_file_updated.rc == 0
+- name: restart guix-daemon if service file was changed
   service:
     name: guix-daemon
     state: restarted
-  when:  # list implies logical "and"
+  when:
   - service_file_updated is defined
   - service_file_updated.rc == 0
-
-- name: make the guix utility available everywhere
-  file:
-    src: /var/guix/profiles/per-user/root/guix-profile/bin/guix
-    dest: /usr/local/bin/guix
-    state: link
-- name: start guix-daemon
+- name: start guix-daemon if it isn't already started
   service:
     name: guix-daemon
     state: started
@@ -126,5 +133,8 @@
   service:
     name: guix-daemon
     enabled: yes
+
+# TODO: figure out how to make this command idempotent (should not be "changed"
+# if the hydra public key was already imported)
 - name: enable the gnu substitutes server
   shell: guix archive --authorize < /root/.guix-profile/share/guix/hydra.gnu.org.pub
