@@ -10,11 +10,11 @@
 # guix signing key
 - name: check if guix signing key is already imported
   command: "gpg -k {{ SIGNING_KEY_FPRINT }}"
-  changed_when: false  # this command is readonly
   register: signing_key_imported
+  changed_when: false  # this command is readonly
 - name: import guix signing key if needed
   command: "gpg --keyserver keys.gnupg.net --recv-keys {{ SIGNING_KEY_FPRINT }}"
-  when: signing_key_imported.rc != 0
+  when: signing_key_imported is defined and signing_key_imported.rc != 0
 
 # guix build users
 - name: create guixbuild group
@@ -30,7 +30,7 @@
     comment: "Guix build user {{ item }}"
     system: yes
     state: present
-  with_sequence: count=10
+  with_sequence: start=1 end=10 format="%02d"
 
 # make sure we have the guix tarball even if guix is already installed
 - name: fetch guix
@@ -116,15 +116,13 @@
 - name: invoke systemctl daemon-reload if service file was changed
   command: systemctl daemon-reload
   when:
-  - service_file_updated is defined
-  - service_file_updated.rc == 0
+  - service_file_updated is defined and service_file_updated.rc == 0
 - name: restart guix-daemon if service file was changed
   service:
     name: guix-daemon
     state: restarted
   when:
-  - service_file_updated is defined
-  - service_file_updated.rc == 0
+  - service_file_updated is defined and service_file_updated.rc == 0
 - name: start guix-daemon if it isn't already started
   service:
     name: guix-daemon
