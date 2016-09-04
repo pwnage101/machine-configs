@@ -1,6 +1,6 @@
 ---
 - name: install various packages from guix
-  shell: $HOME/.guix-profile/bin/guix package -i python@2.7 virtualenv python2-pip
+  command: "{{ GUIX_BIN }}/guix package -i python@2.7 virtualenv python2-pip"
 # just in case the pip deps need them
 - name: install tahoe build dependencies
   apt:
