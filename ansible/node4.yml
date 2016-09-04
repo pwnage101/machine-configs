@@ -1,9 +1,8 @@
 ---
 - hosts: localhost
-  sudo: yes
   roles:
-  - guix
   - server-common
+  - guix
 
   # storage server
   - role: tahoe-storage
