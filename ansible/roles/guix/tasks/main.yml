@@ -1,40 +1,22 @@
 ---
-- name: fetch guix
-  get_url:
-    url: "{{ URL_PREFIX }}/{{ FILENAME }}"
-    sha256sum: "{{ SHA256 }}"
-    dest: "/root/{{ FILENAME }}"
-- name: fetch guix sig
-  get_url:
-    url: "{{ URL_PREFIX }}/{{ FILENAME }}.sig"
-    dest: /root
-- name: import guix signing key
+#############
+# PREP WORK #
+#############
+- name: check if guix already installed
+  stat:
+    path: /gnu/store
+  register: gnu_store_stat  # use gnu_store_stat.stat.exists
+
+# guix signing key
+- name: check if guix signing key is already imported
+  command: "gpg -k {{ SIGNING_KEY_FPRINT }}"
+  changed_when: false  # this command is readonly
+  register: signing_key_imported
+- name: import guix signing key if needed
   command: "gpg --keyserver keys.gnupg.net --recv-keys {{ SIGNING_KEY_FPRINT }}"
-- name: verify guix
-  command: "gpg --verify {{ FILENAME }}.sig"
-  args:
-    chdir: /root
-- name: untar guix
-  unarchive:
-    src: "/root/{{ FILENAME }}"
-    dest: /tmp
-    creates: /tmp/gnu
-    copy: no
-- name: create /var/guix
-  command: mv var/guix /var/
-  args:
-    chdir: /tmp
-    creates: /var/guix
-- name: create /gnu
-  command: mv gnu /
-  args:
-    chdir: /tmp
-    creates: /gnu
-- name: create guix profile for root
-  file:
-    src: /var/guix/profiles/per-user/root/guix-profile
-    dest: /root/.guix-profile
-    state: link
+  when: signing_key_imported.rc != 0
+
+# guix build users
 - name: create guixbuild group
   group:
     name: guixbuild
@@ -49,10 +31,88 @@
     system: yes
     state: present
   with_sequence: count=10
-- name: setup guix-daemon systemd unit file
-  command: cp /root/.guix-profile/lib/systemd/system/guix-daemon.service /etc/systemd/system/
+
+# make sure we have the guix tarball even if guix is already installed
+- name: fetch guix
+  get_url:
+    url: "{{ URL_PREFIX }}/{{ FILENAME }}"
+    sha256sum: "{{ SHA256 }}"
+    dest: "/usr/local/src/{{ FILENAME }}"
+- name: fetch guix sig
+  get_url:
+    url: "{{ URL_PREFIX }}/{{ FILENAME }}.sig"
+    dest: /usr/local/src
+- name: verify guix
+  command: "gpg --verify {{ FILENAME }}.sig"
+  changed_when: false  # this command is readonly
   args:
-    creates: /etc/systemd/system/guix-daemon.service
+    chdir: /usr/local/src
+
+################
+# INSTALL GUIX #
+################
+# This section is idempotent as long as we use gnu_store_stat.stat.exists
+# appropriately to skip potentially dangerous steps.
+
+### ---- begin dangerous stuff ---- ###
+- name: ensure /tmp is clean for unarchiving
+  file:
+    path: /tmp/{{ item }}
+    state: absent
+  items:
+  - gnu
+  - var
+  when: gnu_store_stat.stat.exists == false
+- name: untar guix
+  unarchive:
+    src: "/usr/local/src/{{ FILENAME }}"
+    dest: /tmp
+    creates: /tmp/gnu
+    copy: no
+  when: gnu_store_stat.stat.exists == false
+- name: create /var/guix
+  command: mv var/guix /var/
+  args:
+    chdir: /tmp
+    creates: /var/guix
+  when: gnu_store_stat.stat.exists == false
+- name: create /gnu
+  command: mv gnu /
+  args:
+    chdir: /tmp
+    creates: /gnu
+  when: gnu_store_stat.stat.exists == false
+### ---- end dangerous stuff ---- ###
+
+- name: create guix profile for root
+  file:
+    src: /var/guix/profiles/per-user/root/guix-profile
+    dest: /root/.guix-profile
+    state: link
+
+# setup or update guix-daemon systemd service
+- name: get hash of current guix-daemon systemd service file
+  stat:
+    path: /etc/systemd/system/guix-daemon.service
+    get_md5: true
+  register: current_service_file
+- name: get hash of new guix-daemon systemd service file
+  stat:
+    path: /root/.guix-profile/lib/systemd/system/guix-daemon.service
+    get_md5: true
+  register: new_service_file
+- name: setup/update guix-daemon systemd service file
+  command: cp /root/.guix-profile/lib/systemd/system/guix-daemon.service /etc/systemd/system/
+  when: current_service_file.stat.md5 != new_service_file.stat.md5
+  register: service_file_updated
+- name: restart guix-daemon if the service file was updated
+  service:
+    name: guix-daemon
+    state: restarted
+  when:  # list implies logical "and"
+  - service_file_updated is defined
+  - service_file_updated.rc == 0
+
 - name: make the guix utility available everywhere
   file:
     src: /var/guix/profiles/per-user/root/guix-profile/bin/guix
