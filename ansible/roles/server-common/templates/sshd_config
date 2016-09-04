@@ -65,11 +65,15 @@ UsePAM yes
 # outside the LAN require multi-factor auth
 PubkeyAuthentication yes
 PasswordAuthentication yes
-AuthenticationMethods "publickey,password" "publickey,keyboard-interactive"
+AuthenticationMethods "publickey,password"
 
 # inside the LAN, pubkey is good enough
 Match Address 192.168.0.0/16
+    PubkeyAuthentication yes
+    PasswordAuthentication no
     AuthenticationMethods "publickey"
 Match Address 10.0.0.0/24
+    PubkeyAuthentication yes
+    PasswordAuthentication no
     AuthenticationMethods "publickey"
 
