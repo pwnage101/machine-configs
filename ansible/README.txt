@@ -6,6 +6,7 @@ Steps to run before any playbook:
 
 Additional steps to run before server playbooks only:
 
+* `passwd sankey` on the host
 * ssh-copy-id to the remote host
 
 How to run a playbook:
