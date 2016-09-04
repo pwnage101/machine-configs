@@ -8,12 +8,16 @@
 - name: ensure my key is in .ssh/authorized_keys
   script: "findsum.sh {{ PUBKEY_SHA512 }} /home/sankey/.ssh/authorized_keys"
   register: authorized_keys
+  changed_when: false  # the findsum.sh script never modifies files
 - name: fail if we can't login via pubkey
   fail:
     msg: >
       Could not find an appropriate ssh public key.  Failing ansible to prevent
       lockout.
   when: authorized_keys.rc != 0
+
+# If this is the first time running this role, it will fail before this line
+# and I will probably go run ssh-copy-id and re-run this role.
 
 # among other things, the following task will DISABLE PASSWORD-ONLY LOGINS
 - name: install our sshd_config
