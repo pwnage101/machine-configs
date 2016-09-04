@@ -27,3 +27,12 @@
     owner: root
     group: root
     mode: 0644
+  register: sshd_config_install
+- name: check sshd_config validity
+  command: sshd -t
+  changed_when: false
+- name: reload sshd if we changed the config
+  service:
+    name: sshd
+    state: reloaded
+  when: sshd_config_install|changed
