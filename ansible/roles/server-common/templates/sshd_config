@@ -67,6 +67,7 @@ PubkeyAuthentication yes
 PasswordAuthentication yes
 AuthenticationMethods "publickey,password"
 
+{% if SSH_LAN_PUBKEY_ONLY %}
 # inside the LAN, pubkey is good enough
 Match Address 192.168.0.0/16
     PubkeyAuthentication yes
@@ -76,4 +77,4 @@ Match Address 10.0.0.0/24
     PubkeyAuthentication yes
     PasswordAuthentication no
     AuthenticationMethods "publickey"
-
+{% endif %}

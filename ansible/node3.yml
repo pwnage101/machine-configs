@@ -1,7 +1,8 @@
 ---
 - hosts: localhost
   roles:
-  - server-common
+  - role: server-common
+    SSH_LAN_PUBKEY_ONLY: true
   - guix
 
   # storage server
