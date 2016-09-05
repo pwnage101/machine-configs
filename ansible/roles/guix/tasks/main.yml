@@ -132,7 +132,17 @@
     name: guix-daemon
     enabled: yes
 
-# TODO: figure out how to make this command idempotent (should not be "changed"
-# if the hydra public key was already imported)
+# tell guix to import the hydra public key, only if it isn't already imported
+- name: get hydra pubkey
+  command: grep '(n' {{ HYDRA_PUBKEY_FILE }}
+  register: hydra_pubkey_line
+  failed_when: hydra_pubkey_line.rc == 2  # grep exit code 2 means "error"
+  changed_when: false
+- name: look for hydra pubkey in {{ GUIX_ACL }}
+  command: grep -q {{ hydra_pubkey_line.stdout.split('#')[1] }} {{ GUIX_ACL }}
+  register: hydra_pubkey_found
+  failed_when: hydra_pubkey_found.rc == 2  # grep exit code 2 means "error"
+  changed_when: false
 - name: enable the gnu substitutes server
-  shell: guix archive --authorize < /root/.guix-profile/share/guix/hydra.gnu.org.pub
+  shell: guix archive --authorize < {{ HYDRA_PUBKEY_FILE }}
+  when: hydra_pubkey_found.rc == 1  # grep exit code 1 means "not found"
