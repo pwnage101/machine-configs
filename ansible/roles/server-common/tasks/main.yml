@@ -1,4 +1,7 @@
 ---
+- name: ensure the sankey group exists
+  group:
+    name: sankey
 - name: ensure the sankey user exists
   user:
     name: sankey
