@@ -1,5 +1,9 @@
+Running playbooks the first time
+--------------------------------
+
 Steps to run before any playbook:
 
+* apt-get update && apt-get --yes upgrade
 * apt-get install vim git ansible
 * git clone https://github.com/pwnage101/machine-configs.git
 
