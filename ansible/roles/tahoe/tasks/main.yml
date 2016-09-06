@@ -1,26 +1,35 @@
 ---
-- name: install various packages from guix
-  command: "{{ GUIX_BIN }}/guix package -i python@2.7 python2-virtualenv python2-pip"
+- name: install python stuff for virtualenvs
+  apt:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+  - python-pip
+  - python-virtualenv
 # just in case the pip deps need them
 - name: install tahoe build dependencies
   command: apt-get --assume-yes build-dep tahoe-lafs
+  register: build_deps
+  changed_when:
+  - "'0 newly installed' not in build_deps.stdout"
+  - "'0 upgraded' not in build_deps.stdout"
 - name: install extra tahoe build dependencies
   apt:
     name: "{{ item }}"
     state: latest
   with_items:
+  - python-dev
   - libffi-dev
   - libssl-dev
-- name: install virtualenv using updated python
-  command: "{{ GUIX_BIN }}/virtualenv-2.7 -p {{ GUIX_BIN }}/python2.7 {{ VENV }}"
+- name: create virtualenv
+  command: "virtualenv {{ VENV }}"
   args:
     creates: /opt/tahoe.venv
 - name: install tahoe-lafs and dependencies into virtualenv
   pip:
     name: "{{ PYPI_PACKAGE }}"
-    executable: "{{ GUIX_BIN }}/pip2.7"
     virtualenv: "{{ VENV }}"
-    virtualenv_command: "{{ GUIX_BIN }}/virtualenv-2.7"
+    virtualenv_command: virtualenv
 - name: install tahoe command symlink
   file:
     src: "{{ VENV }}/bin/tahoe"
