@@ -12,9 +12,13 @@
   command: "gpg -k {{ SIGNING_KEY_FPRINT }}"
   register: signing_key_imported
   changed_when: false  # this command is readonly
+  ignore_errors: true
 - name: import guix signing key if needed
   command: "gpg --keyserver keys.gnupg.net --recv-keys {{ SIGNING_KEY_FPRINT }}"
-  when: signing_key_imported is defined and signing_key_imported.rc != 0
+  when: signing_key_imported.rc != 0
+- name: verify that guix signing key successfully imported
+  command: "gpg -k {{ SIGNING_KEY_FPRINT }}"
+  changed_when: false  # this command is readonly
 
 # guix build users
 - name: create guixbuild group
@@ -109,9 +113,9 @@
   when: current_service_file.stat.exists
 - name: setup/update guix-daemon systemd service file
   command: cp /root/.guix-profile/lib/systemd/system/guix-daemon.service /etc/systemd/system/
-  when:
-  - current_service_file.stat.exists
-  - current_service_file.stat.md5 != new_service_file.stat.md5
+  when: >
+    not current_service_file.stat.exists or
+    (current_service_file.stat.exists and current_service_file.stat.md5 != new_service_file.stat.md5)
   register: service_file_updated
 - name: invoke systemctl daemon-reload if service file was changed
   command: systemctl daemon-reload
@@ -138,11 +142,19 @@
   register: hydra_pubkey_line
   failed_when: hydra_pubkey_line.rc == 2  # grep exit code 2 means "error"
   changed_when: false
+- name: check that the guix acl file exists
+  stat:
+    path: "{{ GUIX_ACL }}"
+  register: guix_acl_file
 - name: look for hydra pubkey in {{ GUIX_ACL }}
   command: grep -q {{ hydra_pubkey_line.stdout.split('#')[1] }} {{ GUIX_ACL }}
   register: hydra_pubkey_found
   failed_when: hydra_pubkey_found.rc == 2  # grep exit code 2 means "error"
   changed_when: false
+  when: guix_acl_file.stat.exists
 - name: enable the gnu substitutes server
   shell: guix archive --authorize < {{ HYDRA_PUBKEY_FILE }}
-  when: hydra_pubkey_found.rc == 1  # grep exit code 1 means "not found"
+  # grep exit code 1 means "no matches"
+  when: >
+    not guix_acl_file.stat.exists or
+    hydra_pubkey_found.rc == 1
