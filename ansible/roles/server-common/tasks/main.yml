@@ -1,7 +1,10 @@
 ---
-- name: ensure the sankey group exists
+- name: ensure certain groups exist
   group:
-    name: sankey
+    name: {{ item }}
+  with_items:
+  - sankey
+  - data
 - name: ensure the sankey user exists
   user:
     name: sankey
