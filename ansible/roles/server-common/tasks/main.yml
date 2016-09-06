@@ -1,7 +1,7 @@
 ---
 - name: ensure certain groups exist
   group:
-    name: {{ item }}
+    name: "{{ item }}"
   with_items:
   - sankey
   - data
