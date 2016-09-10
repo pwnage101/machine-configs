@@ -7,14 +7,19 @@
 # proxy_port: 
 # proxy_rewrite_port: 
 
+- name: enable mod_rewrite
+  file:
+    src: /etc/lighttpd/conf-available/10-proxy.conf
+    dest: /etc/lighttpd/conf-enabled/10-proxy.conf
+    state: link
+  register: setup_module
 - name: setup proxy conf
   template:
     src: proxy.conf
     dest: /etc/lighttpd/vhosts.d/{{ vhost }}.conf.d/{{ name }}.conf
   register: setup_conf
-
 - name: restart lighttpd
   service:
     name: lighttpd
     state: restarted
-  when: setup_conf|changed
+  when: setup_conf|changed or setup_module|changed
