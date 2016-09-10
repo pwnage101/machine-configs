@@ -13,6 +13,15 @@
   - server-common
   - guix
 
+  - etherpad
+  - role: www-reverse-proxy
+    name: etherpad
+    vhost: sbk.sankey.info
+    alias: /calc/
+    proxy_host: localhost
+    proxy_port: 8000
+    proxy_rewrite_port: 8001
+
   # sbk website
   - role: www
     name: sbk

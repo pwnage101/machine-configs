@@ -1,0 +1,20 @@
+# required variables:
+#
+# name: e.g. bleh
+# vhost: e.g. sbk.sankey.info (passed to www-vhost)
+# alias:
+# proxy_host: 
+# proxy_port: 
+# proxy_rewrite_port: 
+
+- name: setup proxy conf
+  template:
+    src: proxy.conf
+    dest: /etc/lighttpd/vhosts.d/{{ vhost }}.conf.d/{{ name }}.conf
+  register: setup_conf
+
+- name: restart lighttpd
+  service:
+    name: lighttpd
+    state: restarted
+  when: setup_conf|changed
