@@ -15,9 +15,10 @@
 
   # sbk website
   - role: www
+    name: sbk
     vhost: sbk.sankey.info
     alias: /
-    location: /data/www/sbk
+    location: /data/www/sbk/
     cgi: true
 
 

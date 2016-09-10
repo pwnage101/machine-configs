@@ -15,6 +15,7 @@
   script: "findsum.sh {{ PUBKEY_SHA512 }} /home/sankey/.ssh/authorized_keys"
   register: authorized_keys
   changed_when: false  # the findsum.sh script never modifies files
+  always_run: yes
 - name: fail if we can't login via pubkey
   fail:
     msg: >
@@ -55,9 +56,21 @@
     mode: 0755
     owner: root
     group: root
+- name: enable mod_cgi
+  file:
+    src: /etc/lighttpd/conf-available/10-cgi.conf
+    dest: /etc/lighttpd/conf-enabled/10-cgi.conf
+    state: link
+- name: enable custom configuration
+  template:
+    src: custom.conf
+    dest: /etc/lighttpd/conf-enabled/99-custom.conf
 
 # other software
 - name: install other software
   apt:
-    name: vim mosh
+    name: "{{ item }}"
     state: latest
+  with_items:
+  - vim
+  - mosh

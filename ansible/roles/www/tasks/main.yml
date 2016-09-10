@@ -9,4 +9,11 @@
 - name: setup alias conf
   template:
     src: alias.conf
-    dest: /etc/lighttpd/vhosts.d/{{ vhost }}.d/{{ name }}.conf
+    dest: /etc/lighttpd/vhosts.d/{{ vhost }}.conf.d/{{ name }}.conf
+  register: setup_conf
+
+- name: restart lighttpd
+  service:
+    name: lighttpd
+    state: restarted
+  when: setup_conf|changed
