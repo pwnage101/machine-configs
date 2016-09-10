@@ -1,0 +1,10 @@
+[Unit]
+After=systemd-user-sessions.service
+
+[Service]
+User=ethercalc
+ExecStart=/usr/local/bin/ethercalc
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

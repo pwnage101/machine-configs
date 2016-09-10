@@ -1,0 +1,21 @@
+- name: install ethercalc
+  npm:
+    name: ethercalc
+    state: latest
+    global: true
+- name: install ethercalc user
+  user:
+    name: ethercalc
+    system: true
+- name: install ethercalc service
+  copy:
+    src: ethercalc.service
+    dest: /etc/systemd/system/ethercalc.service
+- name: start ethercalc service
+  service:
+    name: ethercalc
+    state: started
+- name: enable ethercalc service
+  service:
+    name: ethercalc
+    enabled: true

@@ -66,6 +66,16 @@
     src: custom.conf
     dest: /etc/lighttpd/conf-enabled/99-custom.conf
 
+# npm stuff, so the npm module works
+- name: install stuff for nodejs
+  apt:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+  - nodejs
+  - nodejs-legacy
+  - npm
+
 # other software
 - name: install other software
   apt:
