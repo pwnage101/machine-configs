@@ -13,9 +13,9 @@
   - server-common
   - guix
 
-  - etherpad
+  - ethercalc
   - role: www-reverse-proxy
-    name: etherpad
+    name: ethercalc
     vhost: sbk.sankey.info
     alias: /calc/
     proxy_host: localhost
