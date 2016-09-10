@@ -13,3 +13,11 @@
     mode: 0755
     owner: root
     group: root
+
+- name: setup docroot dir
+  file:
+    path: /data/www/{{ www_vhost_fqdn }}
+    state: directory
+    mode: 0755
+    owner: root
+    group: root

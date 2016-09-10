@@ -2,19 +2,25 @@
 #
 # sbk_vhost: e.g. sbk.sankey.info (passed to www-vhost)
 
+# nginx stuff
 - name: setup alias conf
   template:
     src: sbk.conf
     dest: /etc/nginx/vhosts.d/{{ sbk_vhost }}.conf.d/sbk.conf
   register: setup_conf
-
 - name: restart nginx
   service:
     name: nginx
     state: restarted
   when: setup_conf|changed
-
 - name: ensure fcgiwrap is running
   service:
     name: fcgiwrap
     state: started
+
+# deploy the code
+- name: ensure code is present
+  git:
+    repo: https://github.com/somervillebikekitchen/somervillebikekitchen.github.io.git
+    dest: /data/www/{{ sbk_vhost }}
+    depth: 1

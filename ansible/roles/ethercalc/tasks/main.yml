@@ -3,18 +3,35 @@
     name: ethercalc
     state: latest
     global: true
+- name: install ethercalc group
+  group:
+    name: ethercalc
+    system: true
 - name: install ethercalc user
   user:
     name: ethercalc
+    group: ethercalc
     system: true
+- name: ensure ethercalc has a place to put the database
+  file:
+    path: /data/ethercalc
+    state: directory
+    owner: ethercalc
+    group: ethercalc
+    mode: 0755
 - name: install ethercalc service
   copy:
     src: ethercalc.service
     dest: /etc/systemd/system/ethercalc.service
-- name: start ethercalc service
+  register: service
+- name: daemon-reload
+  command: systemctl daemon-reload
+  when: service|changed
+- name: restart ethercalc service
   service:
     name: ethercalc
     state: started
+  when: service|changed
 - name: enable ethercalc service
   service:
     name: ethercalc
