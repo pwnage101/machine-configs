@@ -1,5 +1,14 @@
 ---
 - hosts: localhost
+  vars:
+    FQDN: node4.sankey.info
+    PUBLIC_IPV4:
+    - 69.61.93.76
+    PUBLIC_IPV6:
+    - 2607:1a00:0:19::2:f3
+    - 2607:1a00:0:19::2:f1
+    - 2607:1a00:0:19::2:f0
+    - 2607:1a00:0:19::2:f2
   roles:
   - server-common
   - guix

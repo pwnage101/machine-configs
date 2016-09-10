@@ -1,5 +1,10 @@
 ---
 - hosts: localhost
+  vars:
+    FQDN: node3.sankey.info
+    PUBLIC_IPV4:
+    - 98.217.8.51
+    PUBLIC_IPV6: []
   roles:
   - role: server-common
     SSH_LAN_PUBKEY_ONLY: true
