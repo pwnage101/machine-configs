@@ -19,3 +19,13 @@
   service:
     name: ethercalc
     enabled: true
+- name: setup proxy conf
+  template:
+    src: proxy.conf
+    dest: /etc/nginx/vhosts.d/{{ proxy_vhost }}.conf.d/{{ proxy_name }}.conf
+  register: setup_conf
+- name: restart nginx
+  service:
+    name: nginx
+    state: restarted
+  when: setup_conf|changed
