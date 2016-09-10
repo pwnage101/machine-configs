@@ -1,15 +1,11 @@
 # required variables:
 #
-# name: e.g. bleh
-# vhost: e.g. sbk.sankey.info (passed to www-vhost)
-# alias: e.g. /bleh
-# location: e.g. /data/www/bleh
-# cgi: default false
+# sbk_vhost: e.g. sbk.sankey.info (passed to www-vhost)
 
 - name: setup alias conf
   template:
-    src: alias.conf
-    dest: /etc/nginx/vhosts.d/{{ alias_vhost }}.conf.d/{{ name }}.conf
+    src: sbk.conf
+    dest: /etc/nginx/vhosts.d/{{ sbk_vhost }}.conf.d/sbk.conf
   register: setup_conf
 
 - name: restart nginx
