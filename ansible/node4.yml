@@ -13,60 +13,58 @@
   - server-common
   - guix
 
-  # storage server
-  - role: tahoe-storage
-    location: /data/tahoe-storage
-    capacity: 20
-
   # sbk website
-  - role: tahoe-mnt
-    location: www/sbk
-    mountpoint: /data/www/sbk
-    user: www-data
-    group: www-data
-    mode: 0444
   - role: www
+    vhost: sbk.sankey.info
+    alias: /
     location: /data/www/sbk
     cgi: true
-    
-  # my homepage
-  - role: tahoe-mnt
-    location: www/troy
-    mountpoint: /data/www/troy
-    user: www-data
-    group: www-data
-    mode: 0444
-  - role: www
-    location: /data/www/troy
-    cgi: true
 
-  # Lyn's homepage
-  - role: tahoe-mnt
-    location: www/lyn
-    mountpoint: /data/www/lyn
-    user: www-data
-    group: www-data
-    mode: 0444
-  - role: www
-    location: /data/www/lyn
-    cgi: true
 
-  # tmp
-  - role: tahoe-mnt
-    location: www/tmp
-    mountpoint: /data/www/tmp
-    user: www-data
-    group: www-data
-    mode: 0444
-  - role: www
-    location: /data/www/tmp
-
-  # rand
-  - role: tahoe-mnt
-    location: www/rand
-    mountpoint: /data/www/rand
-    user: www-data
-    group: www-data
-    mode: 0444
-  - role: www
-    location: /data/www/rand
+#  # storage server
+#  - role: tahoe-storage
+#    location: /data/tahoe-storage
+#    capacity: 20
+#
+#    
+#  # my homepage
+#  - role: tahoe-mnt
+#    location: www/troy
+#    mountpoint: /data/www/troy
+#    user: www-data
+#    group: www-data
+#    mode: 0444
+#  - role: www
+#    location: /data/www/troy
+#    cgi: true
+#
+#  # Lyn's homepage
+#  - role: tahoe-mnt
+#    location: www/lyn
+#    mountpoint: /data/www/lyn
+#    user: www-data
+#    group: www-data
+#    mode: 0444
+#  - role: www
+#    location: /data/www/lyn
+#    cgi: true
+#
+#  # tmp
+#  - role: tahoe-mnt
+#    location: www/tmp
+#    mountpoint: /data/www/tmp
+#    user: www-data
+#    group: www-data
+#    mode: 0444
+#  - role: www
+#    location: /data/www/tmp
+#
+#  # rand
+#  - role: tahoe-mnt
+#    location: www/rand
+#    mountpoint: /data/www/rand
+#    user: www-data
+#    group: www-data
+#    mode: 0444
+#  - role: www
+#    location: /data/www/rand

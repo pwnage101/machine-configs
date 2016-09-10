@@ -1,0 +1,12 @@
+# required variables:
+#
+# name: e.g. bleh
+# vhost: e.g. sbk.sankey.info (passed to www-vhost)
+# alias: e.g. /bleh
+# location: e.g. /data/www/bleh
+# cgi: default false
+
+- name: setup alias conf
+  template:
+    src: alias.conf
+    dest: /etc/lighttpd/vhosts.d/{{ vhost }}.d/{{ name }}.conf

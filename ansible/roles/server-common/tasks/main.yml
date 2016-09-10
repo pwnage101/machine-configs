@@ -42,3 +42,16 @@
     name: sshd
     state: reloaded
   when: sshd_config_install|changed
+
+# lighttpd
+- name: install lighttpd
+  apt:
+    name: lighttpd
+    state: latest
+- name: setup vhosts.h
+  file:
+    path: /etc/lighttpd/vhosts.d
+    state: directory
+    mode: 0755
+    owner: root
+    group: root
