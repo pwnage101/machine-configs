@@ -9,7 +9,7 @@
 - name: setup alias conf
   template:
     src: alias.conf
-    dest: /etc/nginx/vhosts.d/{{ vhost }}.conf.d/{{ name }}.conf
+    dest: /etc/nginx/vhosts.d/{{ alias_vhost }}.conf.d/{{ name }}.conf
   register: setup_conf
 
 - name: restart nginx
