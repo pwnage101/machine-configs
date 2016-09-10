@@ -1,14 +1,14 @@
 - name: setup vhost conf
   template:
     src: vhost.conf
-    dest: /etc/lighttpd/vhosts.d/{{ www_vhost_fqdn }}.conf
+    dest: /etc/nginx/vhosts.d/{{ www_vhost_fqdn }}.conf
     mode: 0644
     owner: root
     group: root
   
 - name: setup vhost dir
   file:
-    path: /etc/lighttpd/vhosts.d/{{ www_vhost_fqdn }}.conf.d
+    path: /etc/nginx/vhosts.d/{{ www_vhost_fqdn }}.conf.d
     state: directory
     mode: 0755
     owner: root

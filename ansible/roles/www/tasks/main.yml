@@ -9,11 +9,16 @@
 - name: setup alias conf
   template:
     src: alias.conf
-    dest: /etc/lighttpd/vhosts.d/{{ vhost }}.conf.d/{{ name }}.conf
+    dest: /etc/nginx/vhosts.d/{{ vhost }}.conf.d/{{ name }}.conf
   register: setup_conf
 
-- name: restart lighttpd
+- name: restart nginx
   service:
-    name: lighttpd
+    name: nginx
     state: restarted
   when: setup_conf|changed
+
+- name: ensure fcgiwrap is running
+  service:
+    name: fcgiwrap
+    state: started

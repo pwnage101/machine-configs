@@ -44,27 +44,25 @@
     state: reloaded
   when: sshd_config_install|changed
 
-# lighttpd
-- name: install lighttpd
+# nginx
+- name: install nginx and stuff
   apt:
-    name: lighttpd
+    name: "{{ item }}"
     state: latest
+  with_items:
+  - nginx
+  - fcgiwrap
 - name: setup vhosts.h
   file:
-    path: /etc/lighttpd/vhosts.d
+    path: /etc/nginx/vhosts.d
     state: directory
     mode: 0755
     owner: root
     group: root
-- name: enable mod_cgi
-  file:
-    src: /etc/lighttpd/conf-available/10-cgi.conf
-    dest: /etc/lighttpd/conf-enabled/10-cgi.conf
-    state: link
 - name: enable custom configuration
   template:
     src: custom.conf
-    dest: /etc/lighttpd/conf-enabled/99-custom.conf
+    dest: /etc/nginx/conf.d/99-custom.conf
 
 # npm stuff, so the npm module works
 - name: install stuff for nodejs
