@@ -3,7 +3,7 @@ After=systemd-user-sessions.service
 
 [Service]
 User=ethercalc
-Environment=OPENSHIFT_DATA_DIR=/data/sbk/ethercalc
+Environment=OPENSHIFT_DATA_DIR=/data/ethercalc
 ExecStart=/usr/local/bin/ethercalc
 Restart=always
 
