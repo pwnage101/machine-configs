@@ -55,3 +55,9 @@
     mode: 0755
     owner: root
     group: root
+
+# other software
+- name: install other software
+  apt:
+    name: vim mosh
+    state: latest
