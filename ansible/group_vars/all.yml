@@ -4,3 +4,6 @@
 # "locale".  Make sure to install guix packages as root when using this
 # variable.
 GUIX_BIN: /var/guix/profiles/per-user/root/guix-profile/bin
+
+# configuration directory containing vhost conf and subdirectories
+HTTPD_VHOSTS: /etc/nginx/vhosts.d

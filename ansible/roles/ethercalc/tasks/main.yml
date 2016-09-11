@@ -1,3 +1,4 @@
+---
 - name: install ethercalc
   npm:
     name: ethercalc
@@ -20,7 +21,7 @@
     group: ethercalc
     mode: 0755
 - name: install ethercalc service
-  copy:
+  template:
     src: ethercalc.service
     dest: /etc/systemd/system/ethercalc.service
   register: service
@@ -38,8 +39,8 @@
     enabled: true
 - name: setup proxy conf
   template:
-    src: proxy.conf
-    dest: /etc/nginx/vhosts.d/{{ proxy_vhost }}.conf.d/{{ proxy_name }}.conf
+    src: ethercalc.conf
+    dest: "{{ HTTPD_VHOSTS }}/{{ vhost }}.conf.d/ethercalc.conf"
   register: setup_conf
 - name: restart nginx
   service:
