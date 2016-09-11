@@ -10,29 +10,21 @@
     SSH_LAN_PUBKEY_ONLY: true
   - guix
 
-  # storage server
-  - role: tahoe-storage
-    location: /data/tahoe-storage
-    capacity: 50
+  - role: files
+    files_vhost: files.sankey.info
 
-  # sbk website
-  - role: tahoe-mnt
-    location: www/sbk
-    mountpoint: /data/www/sbk
-    user: www-data
-    group: www-data
-    mode: 0444
-  - role: www
-    location: /data/www/sbk
-    cgi: true
-    
-  # my homepage
-  - role: tahoe-mnt
-    location: www/troy
-    mountpoint: /data/www/troy
-    user: www-data
-    group: www-data
-    mode: 0444
-  - role: www
-    location: /data/www/troy
-    cgi: true
+#  # storage server
+#  - role: tahoe-storage
+#    location: /data/tahoe-storage
+#    capacity: 50
+#
+#  # my homepage
+#  - role: tahoe-mnt
+#    location: www/troy
+#    mountpoint: /data/www/troy
+#    user: www-data
+#    group: www-data
+#    mode: 0444
+#  - role: www
+#    location: /data/www/troy
+#    cgi: true
