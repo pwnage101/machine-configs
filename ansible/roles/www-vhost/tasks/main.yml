@@ -1,3 +1,4 @@
+---
 - name: setup vhost conf
   template:
     src: vhost.conf
@@ -18,6 +19,3 @@
   file:
     path: /data/www/{{ www_vhost_fqdn }}
     state: directory
-    mode: 0755
-    owner: root
-    group: root
