@@ -20,7 +20,7 @@
 - name: ensure fcgiwrap is enabled
   service:
     name: fcgiwrap
-    state: enabled
+    enabled: true
 
 # deploy the code
 - name: ensure code is present
