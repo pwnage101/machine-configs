@@ -17,6 +17,10 @@
   service:
     name: fcgiwrap
     state: started
+- name: ensure fcgiwrap is enabled
+  service:
+    name: fcgiwrap
+    state: enabled
 
 # deploy the code
 - name: ensure code is present
