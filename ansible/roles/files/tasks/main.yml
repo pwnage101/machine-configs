@@ -4,7 +4,7 @@
     path: "{{ UPLOADS_TEMP }}"
     state: directory
     mode: 0755
-    user: www-data
+    owner: www-data
     group: www-data
 - name: install files conf
   template:
