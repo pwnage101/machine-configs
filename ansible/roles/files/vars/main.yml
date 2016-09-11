@@ -1,0 +1,5 @@
+---
+vhost: "{{ files_vhost }}"
+
+# local path for HTTP PUTs to temporarily hold files being uploaded.
+UPLOADS_TEMP: /data/www/{{ vhost }}_uploads_temp

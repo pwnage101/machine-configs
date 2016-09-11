@@ -50,7 +50,8 @@
     name: "{{ item }}"
     state: latest
   with_items:
-  - nginx
+  # this version of nginx comes with WebDAV
+  - nginx-extras
   - fcgiwrap
 - name: setup vhosts.h
   file:

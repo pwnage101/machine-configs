@@ -1,0 +1,18 @@
+---
+- name: ensure client temp directory
+  file:
+    path: "{{ UPLOADS_TEMP }}"
+    state: directory
+    mode: 0755
+    user: www-data
+    group: www-data
+- name: install files conf
+  template:
+    src: files.conf
+    dest: "{{ HTTPD_VHOSTS }}/{{ vhost }}.conf.d/files.conf"
+  register: install_conf
+- name: restart nginx
+  service:
+    name: nginx
+    state: restarted
+  when: install_conf|changed
