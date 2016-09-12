@@ -20,6 +20,9 @@
   - role: sbk
     sbk_vhost: sbk.sankey.info
 
+  # sgmc website
+  - role: sbk
+    sgmc_vhost: sgmc.sankey.info
 
 #  # storage server
 #  - role: tahoe-storage

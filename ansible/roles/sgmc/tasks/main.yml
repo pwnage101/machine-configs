@@ -1,0 +1,30 @@
+# required variables:
+#
+# sgmc_vhost: e.g. sgmc.sankey.info (passed to www-vhost)
+
+# nginx stuff
+- name: setup alias conf
+  template:
+    src: sgmc.conf
+    dest: /etc/nginx/vhosts.d/{{ vhost }}.conf.d/sgmc.conf
+  register: setup_conf
+- name: restart nginx
+  service:
+    name: nginx
+    state: restarted
+  when: setup_conf|changed
+- name: ensure fcgiwrap is running
+  service:
+    name: fcgiwrap
+    state: started
+- name: ensure fcgiwrap is enabled
+  service:
+    name: fcgiwrap
+    enabled: true
+
+# deploy the code
+- name: ensure code is present
+  git:
+    repo: https://github.com/somervillegranolamakingcoop/somervillegranolamakingcoop.github.io.git
+    dest: /data/www/{{ vhost }}
+    depth: 1
