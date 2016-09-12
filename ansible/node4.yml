@@ -21,7 +21,7 @@
     sbk_vhost: sbk.sankey.info
 
   # sgmc website
-  - role: sbk
+  - role: sgmc
     sgmc_vhost: sgmc.sankey.info
 
 #  # storage server
