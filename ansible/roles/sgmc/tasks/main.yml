@@ -6,7 +6,7 @@
 - name: setup alias conf
   template:
     src: sgmc.conf
-    dest: /etc/nginx/vhosts.d/{{ vhost }}.conf.d/sgmc.conf
+    dest: "{{ HTTPD_VHOSTS }}/{{ vhost }}.conf.d/sgmc.conf"
   register: setup_conf
 - name: restart nginx
   service:
