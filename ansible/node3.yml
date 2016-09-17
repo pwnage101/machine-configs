@@ -15,12 +15,12 @@
 
   - role: alias
     name: movies
-    location: /data/movies
+    location: /data/movies/
     alias_vhost: node3.sankey.info
 
   - role: alias
     name: music
-    location: /data/music
+    location: /data/music/
     alias_vhost: node3.sankey.info
 
 #  # storage server
