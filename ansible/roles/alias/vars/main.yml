@@ -1,0 +1,2 @@
+---
+vhost: "{{ alias_vhost }}"

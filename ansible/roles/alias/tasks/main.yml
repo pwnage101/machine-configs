@@ -1,0 +1,15 @@
+# required variables:
+#
+# alias_vhost: e.g. node3.sankey.info (passed to www-vhost)
+
+# nginx stuff
+- name: setup alias conf
+  template:
+    src: alias.conf
+    dest: "{{ HTTPD_VHOSTS }}/{{ vhost }}.conf.d/{{ name }}.conf"
+  register: setup_conf
+- name: restart nginx
+  service:
+    name: nginx
+    state: restarted
+  when: setup_conf|changed
