@@ -42,7 +42,7 @@ case "$p" in
     s_xprop _SURF_GO "$ret"
     ;;
 "_SURF_URI")
-    sel=`$dmenu -l 10 -p "uri [dgtwy*]:" < $bmarks`
+    sel=`tac $bmarks 2> /dev/null | $dmenu -l 10 -p "uri [dgtwy*]:"`
     [ -z "$sel" ] && exit
     opt=$(echo $sel | cut -d ' ' -f 1)
     arg=$(echo $sel | cut -d ' ' -f 2-)
@@ -54,7 +54,7 @@ case "$p" in
         ret="http://tinyurl.com/create.php?url=$uri"
         ;;
     "w") # wikipedia
-        ret="https://wikipedia.org/wiki/$arg"
+        ret="https://en.wikipedia.org/wiki/Special:Search/$arg"
         ;;
     "y") # youtube
         ret="http://www.youtube.com/results?search_query=$arg&aq=f"
