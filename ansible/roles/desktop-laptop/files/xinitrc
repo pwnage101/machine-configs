@@ -5,6 +5,6 @@ nm-applet &
 # general stuff
 xset -b
 setxkbmap -option ctrl:nocaps
-eval "$(gpg-agent --daemon)"
-eval "$(ssh-agent)"
+gpg-connect-agent /bye
+export SSH_AUTH_SOCK=$HOME/.gnupg/S.gpg-agent.ssh
 exec /usr/bin/i3
