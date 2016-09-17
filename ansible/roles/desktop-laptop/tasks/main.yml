@@ -22,7 +22,7 @@
 - name: configure xinitrc
   copy: src=xinitrc dest=~/.xinitrc
 - name: configure i3
-  copy: src=i3/config dest=~/.i3/config
+  template: src=i3/config dest=~/.i3/config
 - name: configure i3status
   copy: src=i3status.conf dest=~/.i3status.conf
 - name: configure vim

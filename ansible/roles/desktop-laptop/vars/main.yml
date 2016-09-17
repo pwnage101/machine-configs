@@ -4,31 +4,43 @@ MONOSPACE_FONT_POINT: 14
 # list of packages to install for each OS
 OS_PACKAGES:
   debian:
+  - zsh
   - vim-gtk # gives +clipboard feature
   - rsync
+  - sshuttle
   - i3
   - suckless-tools
   - surf
   - stterm
   - dunst
   - firefox-esr
-  - zsh
   - msmtp
   - openconnect
   - network-manager-openconnect
   - network-manager-openconnect-gnome # for the desktop applet
   - x11-xserver-utils # provides xset
   - pulseaudio
+  - pidgin-otr
+  - gosmore
+  - bitlbee
+  - bitlbee-plugin-otr
+
 
 GUIX_PACKAGES:
 - glibc-locales
+- nss-certs
+- emacs
+- gnupg
 - notmuch
+- python-notmuch
 - offlineimap
 - alot
 - notmuch-addrlookup-c
 - isync
+- offlineimap
+- khal
 - vdirsyncer
 - bitlbee
+- git
 
 #tools_src_dir: tools
-
