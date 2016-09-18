@@ -1,6 +1,4 @@
 ---
-MONOSPACE_FONT_POINT: 14
-
 # list of packages to install for each OS
 OS_PACKAGES:
   debian:

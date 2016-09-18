@@ -4,3 +4,4 @@
   - role: guix
     sudo: true
   - laptop
+  - desktop-laptop
