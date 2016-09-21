@@ -27,18 +27,18 @@ OS_PACKAGES:
 GUIX_PACKAGES:
 - glibc-locales
 - nss-certs
-- emacs
 - gnupg
+- git
 - notmuch
 - python-notmuch
 - offlineimap
 - alot
 - notmuch-addrlookup-c
-- isync
 - offlineimap
-- khal
-- vdirsyncer
 - bitlbee
-- git
+#- emacs
+#- isync
+#- khal
+#- vdirsyncer
 
 #tools_src_dir: tools
