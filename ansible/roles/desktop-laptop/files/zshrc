@@ -26,11 +26,14 @@ export LESS="-iR"
 # editor
 export EDITOR=vim
 
-# guix stuff
+# Guix stuff
+export GUIX_PROFILE="$HOME/.guix-profile"
 source "$HOME/.guix-profile/etc/profile"
 export GUIX_LOCPATH=$HOME/.guix-profile/lib/locale
-#export PYTHONPATH="/home/sankey/.guix-profile/lib/python3.4/site-packages"
+export GIT_SSL_CAINFO=/etc/ssl/certs/ca-certificates.crt
+
+# Go stuff
+export GOPATH=~/tools/gocode
 
 # path
-export PATH=~/bin:$PATH
-
+export PATH=~/bin:~/tools/gocode/bin:$PATH
