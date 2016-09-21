@@ -1,0 +1,8 @@
+---
+- hosts: localhost
+  roles:
+  - role: guix
+    sudo: true
+  - desktop-laptop
+  - laptop
+  - edx
