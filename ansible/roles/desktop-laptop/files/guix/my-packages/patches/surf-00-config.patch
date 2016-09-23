@@ -24,7 +24,8 @@ index 7c2b10f..4c03952 100644
 -static Bool enablescripts         = TRUE;
 +static Bool enablescripts         = FALSE;
  static Bool enableinspector       = TRUE;
- static Bool enablestyle           = TRUE;
+-static Bool enablestyle           = TRUE;
++static Bool enablestyle           = FALSE;
  static Bool loadimages            = TRUE;
  static Bool hidebackground        = FALSE;
 -static Bool allowgeolocation      = TRUE;

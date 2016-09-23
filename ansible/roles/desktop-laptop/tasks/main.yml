@@ -38,6 +38,10 @@
   user:
     name: "{{ ansible_user_id }}"
     shell: /usr/bin/zsh
+- name: configure surf
+  synchronize:
+    src: roles/desktop-laptop/files/surf/
+    dest: ~/.surf/
 
 
 ##################
