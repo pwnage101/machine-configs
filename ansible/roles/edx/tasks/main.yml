@@ -3,37 +3,37 @@
   sudo: True
   apt:
     name: '{{ item }}'
-  with_items: debian_packages
+    state: present
+  with_items: DEBIAN_PACKAGES
 
-# TODO: put condition on this to only install for edx
 - name: install newer software from backports
   sudo: True
   apt:
     name: '{{ item }}'
-    state: latest
+    state: present
     default_release: jessie-backports
-  with_items: debian_backports_packages
+  with_items: DEBIAN_BACKPORTS_PACKAGES
 
 - name: install newer software from stretch
   sudo: True
   apt:
     name: '{{ item }}'
-    state: latest
+    state: present
     default_release: stretch
-  with_items: debian_stretch_packages
+  with_items: DEBIAN_STRETCH_PACKAGES
 
 # fetch and install vagrant
 - name: fetch vagrant
   sudo: True
   get_url:
     url: 'https://releases.hashicorp.com/vagrant/{{ VAGRANT_VERSION }}/vagrant_{{ VAGRANT_VERSION }}_x86_64.deb'
-    dest: /root
-  register: get_ansible
+    dest: /usr/local/src/
+  register: get_vagrant
 - name: install vagrant
   sudo: True
   apt:
-    deb: "/root/vagrant_{{ VAGRANT_VERSION }}_x86_64.deb"
-  when: get_ansible|changed
+    deb: "/usr/local/src/vagrant_{{ VAGRANT_VERSION }}_x86_64.deb"
+  when: get_vagrant|changed
 
 - name: install software from guix
   command: "guix package -i {{ GUIX_PACKAGES|join('  ') }}"
