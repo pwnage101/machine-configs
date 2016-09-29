@@ -26,10 +26,17 @@
   group:
     name: guixbuild
     system: yes
+- name: create guixbuild usergroups
+  group:
+    name: "guixbuilder{{ item }}"
+    system: yes
+    state: present
+  with_sequence: start=1 end=10 format="%02d"
 - name: create guixbuild users
   user:
     name: "guixbuilder{{ item }}"
-    group: guixbuild
+    group: "guixbuilder{{ item }}"
+    groups: guixbuild
     home: /var/empty
     shell: /usr/sbin/nologin
     comment: "Guix build user {{ item }}"
