@@ -13,7 +13,7 @@ set $alt Mod1
 set $mod Mod4
 
 # font for window titles. ISO 10646 = Unicode
-font pango:Monospace {{ MONOSPACE_FONT_SIZE }}
+font pango:Monospace {{ monospace_font_size }}
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod

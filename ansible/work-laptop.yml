@@ -3,6 +3,7 @@
   roles:
   - role: guix
     sudo: true
-  - desktop-laptop
+  - role: desktop-laptop
+    monospace_font_size: 14
   - laptop
   - edx
