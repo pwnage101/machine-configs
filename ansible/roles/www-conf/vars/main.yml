@@ -1,0 +1,19 @@
+---
+FCGIWRAP_ENABLED_SERVICES:
+- sbk
+- sgmc
+
+CONTENT_SOURCE:
+- git:
+  - sbk: https://github.com/somervillebikekitchen/somervillebikekitchen.github.io.git
+  - sgmc: https://github.com/somervillegranolamakingcoop/somervillegranolamakingcoop.github.io.git
+
+docroot: "{{ HTTPD_DOCROOTS }}/{{ vhost }}"
+vhost_dir: "{{ HTTPD_VHOSTS }}/{{ vhost }}.conf.d"
+fcgiwrap_enabled: "{{ name in FCGIWRAP_ENABLED_SERVICES }}"
+
+
+# CUSTOM VARIABLES
+
+# local path for HTTP PUTs to temporarily hold files being uploaded.
+files_uploads_temp: "{{ docroot }}_uploads_temp"

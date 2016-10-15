@@ -1,2 +1,1 @@
 ---
-vhost: "{{ sbk_vhost }}"

@@ -13,16 +13,23 @@
   - server-common
   - guix
 
+  # ethercalc instance
+  - role: www-vhost
+    fqdn: calc.sankey.info
   - role: ethercalc
-    ethercalc_vhost: calc.sankey.info
+    vhost: calc.sankey.info
 
   # sbk website
+  - role: www-vhost
+    fqdn: sbk.sankey.info
   - role: sbk
-    sbk_vhost: sbk.sankey.info
+    vhost: sbk.sankey.info
 
   # sgmc website
+  - role: www-vhost
+    fqdn: sgmc.sankey.info
   - role: sgmc
-    sgmc_vhost: sgmc.sankey.info
+    vhost: sgmc.sankey.info
 
 #  # storage server
 #  - role: tahoe-storage
@@ -37,9 +44,11 @@
 #    user: www-data
 #    group: www-data
 #    mode: 0444
-#  - role: www
-#    location: /data/www/troy
-#    cgi: true
+  - role: www-vhost
+    fqdn: troy.sankey.info
+  - role: www-conf
+    name: troy
+    vhost: troy.sankey.info
 #
 #  # Lyn's homepage
 #  - role: tahoe-mnt

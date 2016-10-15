@@ -1,30 +1,39 @@
 # required variables:
 #
+# name: e.g. sbk
 # vhost: e.g. sbk.sankey.info
 
 # nginx stuff
 - name: setup alias conf
   template:
-    src: sbk.conf
-    dest: "{{ HTTPD_VHOSTS }}/{{ vhost }}.conf.d/sbk.conf"
+    src: "{{ name }}.conf"
+    dest: "{{ vhost_dir }}/{{ name }}.conf"
   register: setup_conf
 - name: restart nginx
   service:
     name: nginx
     state: restarted
   when: setup_conf|changed
+
+# fcgiwrap
 - name: ensure fcgiwrap is running
   service:
     name: fcgiwrap
     state: started
+  when: "{{ fcgiwrap_enabled }}"
 - name: ensure fcgiwrap is enabled
   service:
     name: fcgiwrap
     enabled: true
+  when: "{{ fcgiwrap_enabled }}"
 
-# deploy the code
-- name: ensure code is present
+# site content
+- name: deploy content via git
   git:
-    repo: https://github.com/somervillebikekitchen/somervillebikekitchen.github.io.git
-    dest: /data/www/{{ vhost }}
+    repo: "{{ CONTENT_SOURCE['git'][name] }}"
+    dest: "{{ docroot }}"
     depth: 1
+  when: "{{ CONTENT_SOURCE['git'].has_key(name) }}"
+
+# custom
+- include: custom.yml

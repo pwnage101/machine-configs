@@ -1,6 +1,6 @@
 # required variables:
 #
-# sgmc_vhost: e.g. sgmc.sankey.info (passed to www-vhost)
+# sgmc_vhost: e.g. sgmc.sankey.info
 
 # nginx stuff
 - name: setup alias conf

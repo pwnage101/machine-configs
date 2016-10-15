@@ -1,4 +1,0 @@
----
-dependencies:
-- role: www-vhost
-  www_vhost_fqdn: "{{ ethercalc_vhost }}"

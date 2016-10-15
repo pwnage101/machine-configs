@@ -2,14 +2,14 @@
 - name: setup vhost conf
   template:
     src: vhost.conf
-    dest: /etc/nginx/vhosts.d/{{ www_vhost_fqdn }}.conf
+    dest: "{{ HTTPD_VHOSTS }}/{{ fqdn }}.conf"
     mode: 0644
     owner: root
     group: root
   
 - name: setup vhost dir
   file:
-    path: /etc/nginx/vhosts.d/{{ www_vhost_fqdn }}.conf.d
+    path: "{{ HTTPD_VHOSTS }}/{{ fqdn }}.conf.d"
     state: directory
     mode: 0755
     owner: root
@@ -17,5 +17,8 @@
 
 - name: setup docroot dir
   file:
-    path: /data/www/{{ www_vhost_fqdn }}
+    path: "{{ HTTPD_DOCROOTS }}/{{ fqdn }}"
     state: directory
+    mode: 0755
+    owner: www-data
+    group: www-data

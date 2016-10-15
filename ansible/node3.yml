@@ -10,20 +10,27 @@
     SSH_LAN_PUBKEY_ONLY: true
   - guix
 
-  - role: files
-    files_vhost: files.sankey.info
+  - role: www-vhost
+    fqdn: troy.sankey.info
 
+  - role: www-vhost
+    fqdn: files.sankey.info
+  - role: www-conf
+    name: files
+    vhost: files.sankey.info
+
+  - role: www-vhost
+    fqdn: node3.sankey.info
   - role: alias
     name: movies
+    vhost: node3.sankey.info
     alias: /movies/
     location: /data/movies/
-    alias_vhost: node3.sankey.info
-
   - role: alias
     name: music
+    vhost: node3.sankey.info
     alias: /music/
     location: /data/music/
-    alias_vhost: node3.sankey.info
 
 #  # storage server
 #  - role: tahoe-storage

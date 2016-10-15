@@ -7,3 +7,6 @@ GUIX_BIN: /var/guix/profiles/per-user/root/guix-profile/bin
 
 # configuration directory containing vhost conf and subdirectories
 HTTPD_VHOSTS: /etc/nginx/vhosts.d
+
+# directory containing various site docroots
+HTTPD_DOCROOTS: /data/www

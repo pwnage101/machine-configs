@@ -1,5 +1,3 @@
 ---
-vhost: "{{ ethercalc_vhost }}"
-
 ETHERCALC_HOST: 127.0.0.1
 ETHERCALC_PORT: 8000
