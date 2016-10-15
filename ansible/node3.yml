@@ -12,6 +12,9 @@
 
   - role: www-vhost
     fqdn: troy.sankey.info
+  - role: www-conf
+    name: troy
+    vhost: troy.sankey.info
 
   - role: www-vhost
     fqdn: files.sankey.info
