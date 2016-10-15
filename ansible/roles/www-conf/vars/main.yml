@@ -4,9 +4,9 @@ FCGIWRAP_ENABLED_SERVICES:
 - sgmc
 
 CONTENT_SOURCE:
-- git:
-  - sbk: https://github.com/somervillebikekitchen/somervillebikekitchen.github.io.git
-  - sgmc: https://github.com/somervillegranolamakingcoop/somervillegranolamakingcoop.github.io.git
+  git:
+    sbk: https://github.com/somervillebikekitchen/somervillebikekitchen.github.io.git
+    sgmc: https://github.com/somervillegranolamakingcoop/somervillegranolamakingcoop.github.io.git
 
 docroot: "{{ HTTPD_DOCROOTS }}/{{ vhost }}"
 vhost_dir: "{{ HTTPD_VHOSTS }}/{{ vhost }}.conf.d"
