@@ -10,7 +10,7 @@
     name: sankey
     createhome: yes
     group: sankey
-    groups: sudo,data
+    groups: sudo,data,www-data
 - name: ensure my key is in .ssh/authorized_keys
   script: "findsum.sh {{ PUBKEY_SHA512 }} /home/sankey/.ssh/authorized_keys"
   register: authorized_keys
