@@ -43,6 +43,19 @@
     src: roles/desktop-laptop/files/surf/
     dest: ~/.surf/
 
+##############################
+# suspend and screen locking #
+##############################
+
+- name: install screen locking service/handler
+  sudo: True
+  template:
+    src: slock.service
+    dest: /etc/systemd/system/slock.service
+- name: enable screen locking service/handler
+  service:
+    name: slock
+    enabled: true
 
 ##################
 # suckless tools #

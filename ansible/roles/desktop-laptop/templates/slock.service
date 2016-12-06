@@ -1,0 +1,12 @@
+[Unit]
+Description=slock
+Before=sleep.target
+
+[Service]
+User=sankey
+Type=simple
+Environment=DISPLAY=:0
+ExecStart=/usr/bin/slock
+
+[Install]
+WantedBy=sleep.target
