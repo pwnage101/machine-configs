@@ -1,0 +1,31 @@
+---
+- name: import torproject apt key
+  apt_key:
+    keyserver: "{{ KEYSERVER }}"
+    id: "{{ apt_key_fprint }}"
+- name: setup torproject apt repository
+  apt_repository:
+    repo: "deb {{ apt_repository }} {{ DEBIAN_RELEASE_NAME }} main"
+- name: install package to keep the keyring updated
+  apt:
+    name: "{{ keyring_package }}"
+- name: install tor
+  apt:
+    name: tor
+- name: setup torrc
+  template:
+    src: torrc
+    dest: /etc/tor/torrc
+    mode: 0644
+    owner: root
+    group: root
+  register: torrc_setup
+- name: restart tor
+  service:
+    name: tor
+    state: restarted
+  when: torrc_setup|changed
+- name: enable tor
+  service:
+    name: tor
+    enabled: yes

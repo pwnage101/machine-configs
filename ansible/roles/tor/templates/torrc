@@ -1,0 +1,7 @@
+# {{ ansible_managed }}
+
+ORPort 9001
+Address {{ FQDN }}
+RelayBandwidthRate 200 KB
+RelayBandwidthBurst 500 KB
+ExitPolicy reject *:* # no exits allowed

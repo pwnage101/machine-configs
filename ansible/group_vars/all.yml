@@ -10,3 +10,9 @@ HTTPD_VHOSTS: /etc/nginx/vhosts.d
 
 # directory containing various site docroots
 HTTPD_DOCROOTS: /data/www
+
+# version of debian I want to be using
+DEBIAN_RELEASE_NAME: jessie
+
+# sks keyserver to pull gpg keys from
+KEYSERVER: pool.sks-keyservers.net

@@ -1,0 +1,14 @@
+---
+
+# torproject debian repository key fingerprint
+apt_key_fprint: A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89
+
+# torproject debian repository location
+apt_repository: http://deb.torproject.org/torproject.org
+
+# name of deb package to keep the keyring updated
+keyring_package: deb.torproject.org-keyring
+
+#
+# source: https://www.torproject.org/docs/debian.html.en
+#
