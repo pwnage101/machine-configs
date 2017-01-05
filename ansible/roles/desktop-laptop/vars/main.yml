@@ -26,6 +26,7 @@ OS_PACKAGES:
 
 GUIX_PACKAGES:
 - glibc-locales
+- net-tools
 - nss-certs
 - gnupg
 - git
