@@ -1,7 +1,10 @@
 ---
 - hosts: localhost
   vars:
+
+    # hard facts
     FQDN: node4.sankey.info
+    NODENAME: node4
     PUBLIC_IPV4:
     - 69.61.93.76
     PUBLIC_IPV6:
@@ -9,6 +12,10 @@
     - 2607:1a00:0:19::2:f1
     - 2607:1a00:0:19::2:f0
     - 2607:1a00:0:19::2:f2
+
+    # derived facts
+    ALL_OTHER_NODES: "{{ ALL_NODES|reject('match', NODENAME)|list }}"
+
   roles:
   - server-common
   - guix

@@ -16,3 +16,8 @@ DEBIAN_RELEASE_NAME: jessie
 
 # sks keyserver to pull gpg keys from
 KEYSERVER: pool.sks-keyservers.net
+
+# all servers
+ALL_NODES:
+- node3
+- node4

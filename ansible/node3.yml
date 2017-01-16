@@ -1,10 +1,17 @@
 ---
 - hosts: localhost
   vars:
+
+    # hard facts
     FQDN: node3.sankey.info
+    NODENAME: node3
     PUBLIC_IPV4:
     - 98.217.8.51
     PUBLIC_IPV6: []
+
+    # derived facts
+    ALL_OTHER_NODES: "{{ ALL_NODES|reject('match', NODENAME)|list }}"
+
   roles:
   - role: server-common
     SSH_LAN_PUBKEY_ONLY: true
