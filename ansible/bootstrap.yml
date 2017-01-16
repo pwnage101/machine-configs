@@ -1,0 +1,9 @@
+---
+- hosts: localhost
+
+  roles:
+  - guix
+
+  tasks:
+  - name: "install ansible >= 2.1"
+    shell: guix package -i ansible

@@ -18,7 +18,6 @@
 
   roles:
   - server-common
-  - guix
 
   # ethercalc instance
   - role: www-vhost

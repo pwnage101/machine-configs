@@ -15,7 +15,6 @@
   roles:
   - role: server-common
     SSH_LAN_PUBKEY_ONLY: true
-  - guix
   - tor
 
   - role: www-vhost

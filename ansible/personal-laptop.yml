@@ -1,7 +1,5 @@
 ---
 - hosts: localhost
   roles:
-  - role: guix
-    sudo: true
   - laptop
   - desktop-laptop

@@ -1,4 +1,8 @@
 ---
+# This role MUST be compatible with the following ansible versions:
+#   - 1.7.*
+#   - 2.1.*
+
 #############
 # PREP WORK #
 #############
