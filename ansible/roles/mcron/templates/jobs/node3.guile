@@ -1,0 +1,7 @@
+
+(job '(next-hour (4 16))
+     "parallel-rsync --par 1 -l sync --host {{ ALL_OTHER_NODES|join(' ') }} /data/wiki/ /data/wiki/")
+
+(job '(next-hour (5 17))
+     "parallel-rsync --par 1 -l sync --host {{ ALL_OTHER_NODES|join(' ') }} /data/www/troy.sankey.info/ /data/www/troy.sankey.info/")
+

@@ -1,0 +1,14 @@
+{{ ansible_managed }}
+
+[Unit]
+Description=Run mcron jobs
+After=time-sync.target
+
+[Service]
+User={{ mcron_user }}
+ExecStart={{ GUIX_BIN }}/mcron {{ jobs_file }}
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+

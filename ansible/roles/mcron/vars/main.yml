@@ -1,0 +1,6 @@
+---
+jobs_directory: /data/mcron/
+jobs_filename: jobs.guile
+jobs_path: "{{ jobs_directory }}{{ jobs_filename }}"
+
+mcron_user: mcron

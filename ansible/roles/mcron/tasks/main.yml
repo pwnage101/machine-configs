@@ -1,0 +1,50 @@
+---
+
+- name: install mcron
+  command: "guix package -i mcron2"
+- name: install commands that we use (apt)
+  apt:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+  - pssh
+- name: setup configuration directory
+  file:
+    path: "{{ jobs_directory }}"
+    state: directory
+    mode: 0755
+    owner: root
+- name: install mcron configuration (jobs)
+  template:
+    src: "jobs/{{ NODENAME }}.guile"
+    dest: "{{ jobs_path }}"
+    mode: 0644
+    owner: root
+- name: install mcron user
+  user:
+    name: "{{ mcron_user }}"
+    home: "{{ jobs_directory }}"
+    shell: /usr/sbin/nologin
+    system: yes
+    state: present
+    comment: "mcron job runner"
+- name: setup ssh key directory
+  file:
+    path: "{{ jobs_directory }}/.ssh"
+    state: directory
+    mode: 0700
+    owner: "{{ mcron_user }}"
+- name: generate mcron user ssh keys
+  user:
+    name: "{{ mcron_user }}"
+    generate_ssh_key: yes
+    ssh_key_bits: 2048
+    ssh_key_file: .ssh/id_rsa
+- name: install mcron service
+  template:
+    src: "mcron.service"
+    dest: /etc/systemd/system/mcron.service
+#- name: enable mcron service
+#  service:
+#    name: mcron
+#    enabled: yes

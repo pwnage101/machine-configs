@@ -1,0 +1,10 @@
+
+(job '(next-hour (0 12))
+     "parallel-rsync --par 1 --host {{ ALL_OTHER_NODES|join(' ') }} /data/ethercalc/ /data/ethercalc/")
+
+(job '(next-hour (1 13))
+     "parallel-rsync --par 1 --host {{ ALL_OTHER_NODES|join(' ') }} /data/wiki/ /data/wiki/")
+
+(job '(next-hour (2 14))
+     "parallel-rsync --par 1 --host {{ ALL_OTHER_NODES|join(' ') }} /data/www/troy/ /data/www/troy/")
+
