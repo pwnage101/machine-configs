@@ -112,34 +112,20 @@
     dest: /usr/local/bin/guix
     state: link
 
-# setup or update guix-daemon systemd service
-- name: get hash of current guix-daemon systemd service file
-  stat:
-    path: /etc/systemd/system/guix-daemon.service
-    get_md5: true
-  register: current_service_file
-- name: get hash of new guix-daemon systemd service file
-  stat:
-    path: /root/.guix-profile/lib/systemd/system/guix-daemon.service
-    get_md5: true
-  register: new_service_file
-  when: current_service_file.stat.exists
-- name: setup/update guix-daemon systemd service file
-  command: cp /root/.guix-profile/lib/systemd/system/guix-daemon.service /etc/systemd/system/
-  when: >
-    not current_service_file.stat.exists or
-    (current_service_file.stat.exists and current_service_file.stat.md5 != new_service_file.stat.md5)
-  register: service_file_updated
-- name: invoke systemctl daemon-reload if service file was changed
+# setup guix-daemon systemd service
+- name: ensure systemd service file (symlink) is installed
+  file:
+    src: /root/.guix-profile/lib/systemd/system/guix-daemon.service
+    dest: /etc/systemd/system/guix-daemon.service
+    state: link
+# In case guix was updated on root profile, or we freshly installed the service
+# file, run systemctl daemon-reload:
+- name: invoke systemctl daemon-reload
   command: systemctl daemon-reload
-  when:
-  - service_file_updated is defined and service_file_updated.rc == 0
-- name: restart guix-daemon if service file was changed
+- name: restart guix-daemon
   service:
     name: guix-daemon
     state: restarted
-  when:
-  - service_file_updated is defined and service_file_updated.rc == 0
 - name: start guix-daemon if it isn't already started
   service:
     name: guix-daemon
