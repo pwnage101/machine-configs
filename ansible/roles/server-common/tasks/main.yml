@@ -15,7 +15,7 @@
   script: "findsum.sh {{ PUBKEY_SHA512 }} /home/sankey/.ssh/authorized_keys"
   register: authorized_keys
   changed_when: false  # the findsum.sh script never modifies files
-  always_run: yes
+  check_mode: no
 - name: fail if we can't login via pubkey
   fail:
     msg: >
