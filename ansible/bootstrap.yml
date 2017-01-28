@@ -5,5 +5,5 @@
   - guix
 
   tasks:
-  - name: "install ansible >= 2.1"
+  - name: "install ansible >= 2.2"
     shell: guix package -i ansible
