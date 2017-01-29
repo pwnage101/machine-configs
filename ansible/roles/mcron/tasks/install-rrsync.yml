@@ -3,7 +3,7 @@
     name: rsync
     state: latest
 - name: install rrsync
-  command: zcat /usr/share/doc/rsync/scripts/rrsync.gz >{{ scripts }}/bin/rrsync
+  shell: zcat /usr/share/doc/rsync/scripts/rrsync.gz >{{ SCRIPTS }}/rrsync
   args:
     creates: "{{ SCRIPTS }}/rrsync"
 - name: make sure rrsync is executable
