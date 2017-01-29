@@ -9,4 +9,4 @@
 - name: make sure rrsync is executable
   file:
     path: "{{ SCRIPTS }}/rrsync"
-    mode: 755
+    mode: 0755
