@@ -21,3 +21,5 @@ KEYSERVER: pool.sks-keyservers.net
 ALL_NODES:
 - node3
 - node4
+
+SCRIPTS: /opt/scripts

@@ -5,8 +5,8 @@
 - name: install rrsync
   command: zcat /usr/share/doc/rsync/scripts/rrsync.gz >{{ scripts }}/bin/rrsync
   args:
-    creates: "{{ scripts }}/bin/rrsync"
+    creates: "{{ SCRIPTS }}/rrsync"
 - name: make sure rrsync is executable
   file:
-    path: "{{ scripts }}/bin/rrsync"
+    path: "{{ SCRIPTS }}/rrsync"
     mode: 755

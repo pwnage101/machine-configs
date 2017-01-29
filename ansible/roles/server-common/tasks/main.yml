@@ -44,6 +44,14 @@
     state: reloaded
   when: sshd_config_install|changed
 
+# a place to put random scripts
+- name: scripts directory
+  file:
+    path: "{{ SCRIPTS }}"
+    state: directory
+    owner: root
+    mode: 0755
+
 # nginx
 - name: install nginx and stuff
   apt:
