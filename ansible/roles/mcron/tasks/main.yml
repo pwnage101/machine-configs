@@ -8,7 +8,9 @@
     state: latest
   with_items:
   - pssh
-- name: setup configuration directory
+  - gzip
+- include: install-rrsync.yml
+- name: setup mcron configuration/home directory
   file:
     path: "{{ jobs_directory }}"
     state: directory

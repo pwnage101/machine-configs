@@ -1,0 +1,12 @@
+- name: ensure rsync is installed
+  apt:
+    name: rsync
+    state: latest
+- name: install rrsync
+  command: zcat /usr/share/doc/rsync/scripts/rrsync.gz >{{ scripts }}/bin/rrsync
+  args:
+    creates: "{{ scripts }}/bin/rrsync"
+- name: make sure rrsync is executable
+  file:
+    path: "{{ scripts }}/bin/rrsync"
+    mode: 755
