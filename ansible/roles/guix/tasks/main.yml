@@ -126,10 +126,6 @@
   service:
     name: guix-daemon
     state: restarted
-- name: start guix-daemon if it isn't already started
-  service:
-    name: guix-daemon
-    state: started
 - name: enable guix-daemon
   service:
     name: guix-daemon

@@ -1,0 +1,26 @@
+---
+- name: check if guix signing key was already generated
+  stat:
+    path: /etc/guix/signing-key.pub
+  register: signing_key_stat  # use signing_key_stat.stat.exists
+- name: generate archive signing keys (only when needed)
+  command: guix archive --generate-key
+  when: signing_key_stat.stat.exists == false
+- name: ensure systemd service file (symlink) for guix-publish is installed
+  file:
+    src: /root/.guix-profile/lib/systemd/system/guix-publish.service
+    dest: /etc/systemd/system/guix-publish.service
+    state: link
+- name: invoke systemctl daemon-reload
+  command: systemctl daemon-reload
+- name: wait for the signing key to become generated
+  wait_for:
+    path: /etc/guix/signing-key.pub
+- name: restart guix-publish
+  service:
+    name: guix-publish
+    state: restarted
+- name: enable guix-publish
+  service:
+    name: guix-publish
+    enabled: yes

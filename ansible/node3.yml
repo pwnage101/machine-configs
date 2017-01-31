@@ -15,6 +15,7 @@
   roles:
   - role: server-common
     SSH_LAN_PUBKEY_ONLY: true
+  - guix-publish
   - mcron
   - tor
 
