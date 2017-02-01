@@ -20,7 +20,14 @@
   service:
     name: guix-publish
     state: restarted
-- name: enable guix-publish
-  service:
-    name: guix-publish
-    enabled: yes
+
+# Due to a bug in systemd < v230 symlinked service files cannot be enabled.
+# Until debian starts packaging systemd >= v230, keep this task commented in
+# favor of the subsequent task.
+#
+#- name: enable guix-publish
+#  service:
+#    name: guix-publish
+#    enabled: yes
+- name: link guix-publish.service
+  command: systemctl link /root/.guix-profile/lib/systemd/system/guix-publish.service

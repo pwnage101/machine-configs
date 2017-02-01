@@ -126,10 +126,16 @@
   service:
     name: guix-daemon
     state: restarted
-- name: enable guix-daemon
-  service:
-    name: guix-daemon
-    enabled: yes
+# Due to a bug in systemd < v230 symlinked service files cannot be enabled.
+# Until debian starts packaging systemd >= v230, keep this task commented in
+# favor of the subsequent task.
+#
+#- name: enable guix-daemon
+#  service:
+#    name: guix-daemon
+#    enabled: yes
+- name: link guix-daemon.service
+  command: systemctl link /root/.guix-profile/lib/systemd/system/guix-daemon.service
 
 # tell guix to import the hydra public key, only if it isn't already imported
 - name: get hydra pubkey
