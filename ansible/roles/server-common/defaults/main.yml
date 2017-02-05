@@ -1,3 +1,6 @@
 ---
 # pubkey-only logins are acceptible if true
 SSH_LAN_PUBKEY_ONLY: false
+
+# x11 forwarding is enabled if true
+X11_FORWARDING: false

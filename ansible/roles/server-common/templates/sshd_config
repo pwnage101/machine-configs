@@ -46,6 +46,11 @@ PrintMotd no
 PrintLastLog yes
 TCPKeepAlive yes
 
+{% if X11_FORWARDING %}
+X11Forwarding yes
+X11DisplayOffset 10
+{% endif %}
+
 # Allow client to pass locale environment variables
 AcceptEnv LANG LC_*
 
