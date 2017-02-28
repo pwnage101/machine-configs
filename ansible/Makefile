@@ -18,5 +18,7 @@ personal-laptop:
 	ansible-playbook -i inventory.ini $@.yml
 work-laptop:
 	ansible-playbook -i inventory.ini $@.yml
+mayfirst:
+	ansible-playbook -i inventory.ini --ask-pass $@.yml
 
-.PHONY: check_root bootstrap node3 node4 personal-laptop work-laptop
+.PHONY: check_root bootstrap node3 node4 personal-laptop work-laptop mayfirst

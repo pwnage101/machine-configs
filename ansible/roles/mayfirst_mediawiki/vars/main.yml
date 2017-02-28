@@ -1,0 +1,14 @@
+---
+DOWNLOADS_DIR: /home/members/troysankey/sites/sankey.info/users/sankey/downloads
+DOCROOT_DIR:   /home/members/troysankey/sites/sankey.info/web
+BIN_DIR:       /home/members/troysankey/sites/sankey.info/users/sankey/bin
+BACKUP_DIR:    /home/members/troysankey/sites/sankey.info/users/sankey/backup
+
+MEDIAWIKI_VERSION_MAJOR: "1.28"
+MEDIAWIKI_VERSION_MINOR: "0"
+MEDIAWIKI_VERSION_FULL: "{{ MEDIAWIKI_VERSION_MAJOR }}.{{ MEDIAWIKI_VERSION_MINOR }}"
+MEDIAWIKI_TARGZ_URL: https://releases.wikimedia.org/mediawiki/{{ MEDIAWIKI_VERSION_MAJOR }}/mediawiki-{{ MEDIAWIKI_VERSION_FULL }}.tar.gz
+MEDIAWIKI_TARGZ_SHA256: d1b8cdbb435bf59da8f518b05277cc9a6b35d3bf16e27e8bb49ebcfa7d7f8471
+
+WEB_USER: sankey
+WEB_GROUP: sankey

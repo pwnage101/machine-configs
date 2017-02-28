@@ -1,0 +1,6 @@
+---
+- hosts: mayfirst
+
+  roles:
+  - role: mayfirst_mediawiki
+    web_user: sankey

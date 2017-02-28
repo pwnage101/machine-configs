@@ -1,0 +1,43 @@
+---
+- name: setup directories
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - "{{ DOWNLOADS_DIR }}"
+    - "{{ BIN_DIR }}"
+    - "{{ BACKUP_DIR }}"
+- name: fetch mediawiki
+  get_url:
+    url: "{{ MEDIAWIKI_TARGZ_URL }}"
+    dest: "{{ DOWNLOADS_DIR }}"
+    checksum: sha256:{{ MEDIAWIKI_TARGZ_SHA256 }}
+
+#- name: check installed version
+#  shell: "grep '^\$wgVersion' {{ DOCROOT_DIR }}/includes/DefaultSettings.php"
+#  register: mediawiki_wgVersion
+#  changed_when: false  # this command is readonly, so it never makes changes
+#  check_mode: no  # this command is readonly, there's no harm running it in
+#                  # check mode
+#- name: unpack mediawiki (DANGEROUS)
+#  unarchive:
+#    src: "{{ DOWNLOADS_DIR }}/mediawiki-{{ MEDIAWIKI_VERSION_FULL }}.tar.gz"
+#    dest: "{{ DOCROOT_DIR }}"
+#    remote_src: yes
+#  when: mediawiki_wgVersion.stdout.find(MEDIAWIKI_VERSION_FULL) == -1
+
+- name: install LocalSettings.php
+  template:
+    src: LocalSettings.php
+    dest: "{{ DOCROOT_DIR }}/LocalSettings.php"
+    owner: "{{ WEB_USER }}"
+    group: "{{ WEB_GROUP }}"
+    mode: 0600  # contains secrets
+
+- name: setup backup script
+  template:
+    src: backup.sh
+    dest: "{{ BIN_DIR }}/backup.sh"
+    owner: "{{ WEB_USER }}"
+    group: "{{ WEB_GROUP }}"
+    mode: 0600  # contains secrets
