@@ -73,15 +73,34 @@
     src: custom.conf
     dest: /etc/nginx/conf.d/99-custom.conf
 
+- name: install a few apt packages
+  apt:
+    name: "{{ item }}"
+    state: latest
+  with_items: "{{ PACKAGES.apt }}"
+
 # npm stuff, so the npm module works
-- name: install stuff for nodejs
+- name: install nodesource repository apt key
+  apt_key:
+    url: "{{ REPOSITORIES.nodesource.key_url }}"
+    state: present
+- name: install nodesource repository
+  apt_repository:
+    repo: "{{ REPOSITORIES.nodesource.repo }}"
+    state: present
+- name: make sure the jessie node packages are uninstalled
+  apt:
+    name: "{{ item }}"
+    state: absent
+  with_items:
+  - nodejs-legacy
+  - npm
+- name: install nodejs
   apt:
     name: "{{ item }}"
     state: latest
   with_items:
   - nodejs
-  - nodejs-legacy
-  - npm
 
 # other software
 - name: install other software
