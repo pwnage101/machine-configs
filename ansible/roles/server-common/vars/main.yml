@@ -1,3 +1,12 @@
 ---
 # checksum of my ssh public key
 PUBKEY_SHA512: e7c22395dc244aea0b44b61bad750cc9e24e27282cc9d10f94082860c12022bc234c7cfffd63a299e5cee4222acc26d05f87eb14a2f89f71ce4880b34f3060f4
+
+REPOSITORIES:
+  nodesource:
+    repo: deb https://deb.nodesource.com/node_7.x jessie main
+    key_url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+
+PACKAGES:
+  apt:
+  - apt-transport-https
