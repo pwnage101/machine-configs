@@ -40,4 +40,4 @@
     dest: "{{ BIN_DIR }}/backup.sh"
     owner: "{{ WEB_USER }}"
     group: "{{ WEB_GROUP }}"
-    mode: 0600  # contains secrets
+    mode: 0700  # contains secrets
