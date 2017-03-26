@@ -16,12 +16,14 @@ OS_PACKAGES:
   - openconnect
   - network-manager-openconnect
   - network-manager-openconnect-gnome # for the desktop applet
+  - network-manager-gnome # for the tray icon
   - x11-xserver-utils # provides xset
   - pulseaudio
   - pidgin-otr
   - gosmore
   - bitlbee
   - bitlbee-plugin-otr
+  - xfce4-power-manager
 
 
 GUIX_PACKAGES:
