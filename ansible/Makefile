@@ -15,7 +15,7 @@ node3: check_root
 node4: check_root
 	ansible-playbook -i inventory.ini $@.yml
 personal-laptop:
-	ansible-playbook -i inventory.ini $@.yml
+	ansible-playbook -i inventory.ini --ask-sudo-pass $@.yml
 work-laptop:
 	ansible-playbook -i inventory.ini $@.yml
 mayfirst:
