@@ -28,9 +28,11 @@ export EDITOR=vim
 
 # Guix stuff
 export GUIX_PROFILE="$HOME/.guix-profile"
-source "$HOME/.guix-profile/etc/profile"
-export GUIX_LOCPATH=$HOME/.guix-profile/lib/locale
+source "$GUIX_PROFILE/etc/profile"
+export GUIX_LOCPATH=$GUIX_PROFILE/lib/locale
 export GIT_SSL_CAINFO=/etc/ssl/certs/ca-certificates.crt
+export GIT_EXEC_PATH="$GUIX_PROFILE/libexec/git-core"
+
 
 # Go stuff
 export GOPATH=~/tools/gocode
