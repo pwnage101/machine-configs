@@ -54,7 +54,7 @@
 
 (suckless-tool
   #:package-symbol 'st
-  #:commit "ff241199edc7631d6599c22414ef6823059a1072"
+  #:commit "e7ed326d2e914a57017c9f34459824614075519b"
   #:hash "13daz37p8xxvz2b4hz8jzjlv66hh0z50sdf23q8ykbw66dbqv4ms"
   #:patches '(
     "st-00-config.patch"))
