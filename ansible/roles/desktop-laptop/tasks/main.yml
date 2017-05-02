@@ -8,7 +8,7 @@
 - name: install common packages
   become: True
   apt: name={{ item }}
-  with_items: OS_PACKAGES.debian
+  with_items: "{{ OS_PACKAGES.debian }}"
 
 #- name: install software from guix
 #  command: "guix package -i {{ GUIX_PACKAGES|join(' ') }}"

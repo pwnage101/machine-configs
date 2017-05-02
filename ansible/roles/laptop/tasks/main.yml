@@ -1,9 +1,10 @@
 ---
 - name: install laptop related packages
   become: True
-  apt: name={{ item }}
+  apt:
+    name: "{{ item }}"
+    state: present
   with_items:
-  - laptop-mode-tools
   - xcalib
   - network-manager
   - network-manager-gnome
