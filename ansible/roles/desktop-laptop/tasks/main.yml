@@ -13,6 +13,19 @@
 #- name: install software from guix
 #  command: "guix package -i {{ GUIX_PACKAGES|join(' ') }}"
 
+- name: setup torproject repo key
+  become: True
+  apt_key:
+    id: A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89
+    state: present
+    keyserver: "{{ KEYSERVER }}"
+- name: setup torproject repo
+  become: True
+  apt_repository:
+    repo: deb http://deb.torproject.org/torproject.org jessie main
+    state: present
+    update_cache: yes
+
 - name: configure ~/bin
   synchronize: src=roles/desktop-laptop/files/bin/ dest=~/bin/
 
