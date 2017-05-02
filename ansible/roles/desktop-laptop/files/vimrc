@@ -93,4 +93,8 @@ set modelines=5
 
 filetype plugin on
 
+set tabstop=8          " real <Tab>s should look 8 characters wide
+set shiftwidth=4       " amount to indent should be 4 spaces
+set expandtab smarttab " automatic indentation should use spaces
+
 " vim:set ft=vim et sw=2:

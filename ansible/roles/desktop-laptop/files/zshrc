@@ -29,10 +29,13 @@ export EDITOR=vim
 # Guix stuff
 export GUIX_PROFILE="$HOME/.guix-profile"
 source "$GUIX_PROFILE/etc/profile"
-export GUIX_LOCPATH=$GUIX_PROFILE/lib/locale
-export GIT_SSL_CAINFO=/etc/ssl/certs/ca-certificates.crt
+export GUIX_LOCPATH="$GUIX_PROFILE/lib/locale"
 export GIT_EXEC_PATH="$GUIX_PROFILE/libexec/git-core"
-
+export GIT_SSL_CAINFO="/etc/ssl/certs/ca-certificates.crt"
+export SSL_CERT_DIR="/etc/ssl/certs"
+export SSL_CERT_FILE="/etc/ssl/certs/ca-certificates.crt"
+export MANPATH="/var/guix/profiles/per-user/root/guix-profile/share/man:"
+export INFOPATH="${INFOPATH}${INFOPATH:+:}/var/guix/profiles/per-user/root/guix-profile/share/info"
 
 # Go stuff
 export GOPATH=~/tools/gocode
