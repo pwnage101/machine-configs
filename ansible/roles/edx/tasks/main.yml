@@ -1,13 +1,13 @@
 ---
 - name: install debian packages
-  sudo: True
+  become: True
   apt:
     name: '{{ item }}'
     state: present
   with_items: DEBIAN_PACKAGES
 
 - name: install newer software from backports
-  sudo: True
+  become: True
   apt:
     name: '{{ item }}'
     state: present
@@ -15,7 +15,7 @@
   with_items: DEBIAN_BACKPORTS_PACKAGES
 
 - name: install newer software from stretch
-  sudo: True
+  become: True
   apt:
     name: '{{ item }}'
     state: present
@@ -24,13 +24,13 @@
 
 # fetch and install vagrant
 - name: fetch vagrant
-  sudo: True
+  become: True
   get_url:
     url: 'https://releases.hashicorp.com/vagrant/{{ VAGRANT_VERSION }}/vagrant_{{ VAGRANT_VERSION }}_x86_64.deb'
     dest: /usr/local/src/
   register: get_vagrant
 - name: install vagrant
-  sudo: True
+  become: True
   apt:
     deb: "/usr/local/src/vagrant_{{ VAGRANT_VERSION }}_x86_64.deb"
   when: get_vagrant|changed

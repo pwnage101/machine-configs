@@ -3,10 +3,10 @@
 # packages #
 ############
 #- name: update apt cache
-#  sudo: True
+#  become: True
 #  apt: update_cache=yes
 - name: install common guix packages
-  sudo: True
+  become: True
   shell: guix package -i vdirsyncer
 
 ############

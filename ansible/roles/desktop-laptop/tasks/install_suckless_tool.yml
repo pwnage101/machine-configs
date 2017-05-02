@@ -33,7 +33,7 @@
   args:
     chdir: "{{ tools_src_dir }}/{{ name }}"
 - name: "install {{ name }}"
-  sudo: True
+  become: True
   command: make install
   args:
     chdir: "{{ tools_src_dir }}/{{ name }}"

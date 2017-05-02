@@ -1,6 +1,6 @@
 ---
 - name: install laptop related packages
-  sudo: True
+  become: True
   apt: name={{ item }}
   with_items:
   - laptop-mode-tools

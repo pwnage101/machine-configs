@@ -3,10 +3,10 @@
 # packages #
 ############
 #- name: update apt cache
-#  sudo: True
+#  become: True
 #  apt: update_cache=yes
 - name: install common packages
-  sudo: True
+  become: True
   apt: name={{ item }}
   with_items: OS_PACKAGES.debian
 
@@ -38,7 +38,7 @@
 - name: configure zsh
   copy: src=zshrc dest=~/.zshrc
 - name: ensure default shell is zsh
-  sudo: True
+  become: True
   user:
     name: "{{ ansible_user_id }}"
     shell: /usr/bin/zsh
@@ -52,11 +52,12 @@
 ##############################
 
 - name: install screen locking service/handler
-  sudo: True
+  become: True
   template:
     src: slock.service
     dest: /etc/systemd/system/slock.service
 - name: enable screen locking service/handler
+  become: True
   service:
     name: slock
     enabled: true
