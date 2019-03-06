@@ -1,5 +1,7 @@
 ---
 - hosts: localhost
+  vars:
+    DEBIAN_RELEASE_NAME: bionic
   roles:
   - role: desktop-laptop
     monospace_font_size: 14

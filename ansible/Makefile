@@ -15,10 +15,10 @@ node3: check_root
 node4: check_root
 	ansible-playbook -i inventory.ini $@.yml
 personal-laptop:
-	ansible-playbook -i inventory.ini --ask-sudo-pass $@.yml
+	ansible-playbook -i inventory.ini --ask-become-pass $@.yml
 work-laptop:
-	ansible-playbook -i inventory.ini $@.yml
+	ansible-playbook -i inventory.ini --ask-become-pass $@.yml
 mayfirst:
-	ansible-playbook -i inventory.ini --ask-pass $@.yml
+	ansible-playbook -i inventory.ini --ask-become-pass --vault-password-file ../scripts/open_the_vault.sh $@.yml
 
 .PHONY: check_root bootstrap node3 node4 personal-laptop work-laptop mayfirst
